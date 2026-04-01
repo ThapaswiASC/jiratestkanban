@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board — Play UI Design</title>
+  <style>
+    :root {
+      --Neutral-N-100: #ededf3;
+      --Neutral-N-200: #DADCE7;
+      --Neutral-N-1000: #292c3d;
+      --Neutral-N-1050: #14161f;
+      --primary-color: #3f51b5;
+      --primary-hover: #2e3f9e;
+      --primary-active: #2e308e;
+      --secondary-color: #fff;
+      --secondary-hover: #f6f7fa;
+      --secondary-active: #edeef3;
+      --danger-color: #C9372C;
+      --danger-hover: #b02a20;
+      --warning-color: #f59e0b;
+      --warning-hover: #d97706;
+      --success-color: #019978;
+      --white: #fff;
+      --border-color: #858aad;
+      --btn-border-radius: 8px;
+      --btn-font-size-md: 14px;
+      --btn-font-size-sm: 12px;
+      --btn-font-size-lg: 16px;
+      --btn-padding-md: 0.625rem 1.25rem;
+      --btn-padding-sm: 0.4rem 0.875rem;
+      --btn-padding-lg: 0.875rem 1.75rem;
+      --btn-icon-size-md: 20px;
+      --btn-icon-size-sm: 16px;
+      --btn-icon-size-lg: 24px;
+      --btn-gap: 8px;
+      --surface: #fff;
+      --awe-card-border-radius: 6px;
+      --awe-card-padding-small: 16px;
+      --awe-card-padding-medium: 24px;
+      --awe-card-shadow: 0 2px 4px rgba(0,0,0,0.16);
+      --awe-card-shadow-elevated: 0 8px 16px rgba(0,0,0,0.16);
+      --spacing-1x: 4px;
+      --spacing-2x: 8px;
+      --spacing-3x: 12px;
+      --spacing-4x: 16px;
+      --spacing-5x: 20px;
+      --spacing-6x: 24px;
+      --spacing-7x: 28px;
+      --spacing-8x: 32px;
+      --spacing-10x: 40px;
+      --font-font-family-body: 'DM Sans', sans-serif;
+      --font-font-family-heading: 'DM Sans', sans-serif;
+      --font-font-weight-regular: 400;
+      --font-font-weight-medium: 500;
+      --font-font-weight-bold: 700;
+      --font-font-size-body: 14px;
+      --font-font-size-heading-3: 20px;
+      --font-font-size-heading-5: 16px;
+      --font-font-size-label: 12px;
+      --text-body: #292c3d;
+      --text-title: #14161f;
+      --text-caption: #858aad;
+      --text-disabled: #A3A7C2;
+      --icons-neutral-icon: #858aad;
+      --icons-action: #3f51b5;
+      --button-primary-bg-action: #3f51b5;
+      --button-primary-hover-action: #2e3f9e;
+      --button-primary-bg-active: #2e308e;
+      --button-primary-label-action: #fff;
+      --button-primary-bg-disable: #e0e0e0;
+      --button-primary-label-disable: #9e9e9e;
+      --button-primary-label-warning: #3f51b5;
+      --button-primary-bg-warning: #f59e0b;
+      --button-primary-hover-warning: #d97706;
+      --button-primary-bg-danger: #C9372C;
+      --button-primary-label-danger: #fff;
+      --button-primary-hover-danger: #b02a20;
+      --button-secondary-bg-bg: #fff;
+      --button-secondary-border-action: #858aad;
+      --button-secondary-label-action: #292c3d;
+      --button-secondary-label-disable: #9e9e9e;
+      --button-secondary-label-warning: #C9372C;
+      --button-warning-hover-bg: #fff8ec;
+      --button-danger-hover-bg: #fff0ef;
+      --button-primary-bg-subtle: rgba(63,81,181,0.08);
+      --focused-selected-ring: #3f51b5;
+      --focused-selected-bg: rgba(63,81,181,0.08);
+    }
+    html,body{height:100%;font-family:var(--font-font-family-body);background:var(--Neutral-N-100);color:var(--text-body);font-size:var(--font-font-size-body);line-height:1.5}
+    #app{display:flex;height:100vh;overflow:hidden}
+    .sidebar-container{width:260px;flex-shrink:0;display:flex;flex-direction:row}
+    .sidebar{flex:1;display:flex;flex-direction:column;height:100vh;padding:var(--spacing-7x) var(--spacing-5x) var(--spacing-7x) var(--spacing-3x);border-radius:0;border-right:0.5px solid var(--Neutral-N-200);background:var(--button-secondary-bg-bg);box-shadow:0px 2px 4px 0px rgba(0,0,0,0.16);backdrop-filter:blur(15px);overflow-y:auto}
+    .sidebar-brand{display:flex;align-items:center;gap:var(--spacing-3x);padding:0 var(--spacing-3x) var(--spacing-6x);border-bottom:1px solid var(--Neutral-N-200);margin-bottom:var(--spacing-4x)}
+    .brand-icon{width:34px;height:34px;background:var(--button-primary-bg-action);border-radius:var(--awe-card-border-radius);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;font-weight:var(--font-font-weight-bold);flex-shrink:0}
+    .brand-name{font-size:15px;font-weight:var(--font-font-weight-bold);color:var(--text-title);letter-spacing:-.02em}
+    .brand-name span{color:var(--button-primary-bg-action)}
+    .sidebar-section-label{padding:var(--spacing-4x) var(--spacing-3x) var(--spacing-2x);font-size:10px;font-weight:var(--font-font-weight-bold);letter-spacing:.1em;text-transform:uppercase;color:var(--text-caption)}
+    .sidebar ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--spacing-1x);width:100%}
+    .sidebar li{width:100%;display:flex;align-items:center;padding:var(--spacing-3x);gap:var(--spacing-3x);cursor:pointer;border-radius:var(--spacing-3x);transition:background-color 0.2s ease;font-size:13.5px;font-weight:var(--font-font-weight-medium);color:var(--text-caption)}
+    .sidebar li:hover{background-color:var(--button-primary-bg-subtle)}
+    .sidebar li.selected{background-color:var(--button-primary-bg-subtle)}
+    .sidebar li.selected span{color:var(--button-primary-label-warning);font-weight:var(--font-font-weight-medium)}
+    .sidebar li.selected svg{color:var(--button-primary-bg-action)}
+    .nav-badge-pill{margin-left:auto;background:var(--button-primary-bg-action);color:var(--text-white);font-size:10px;font-weight:var(--font-font-weight-bold);padding:2px 7px;border-radius:9999px}
+    .sb-footer{margin-top:auto;padding:var(--spacing-4x) var(--spacing-3x);border-top:1px solid var(--Neutral-N-200)}
+    .sb-footer-text{font-size:var(--font-font-size-small);color:var(--text-caption);line-height:1.9}
+    .sb-footer-text strong{color:var(--text-caption);display:block;font-weight:var(--font-font-weight-medium)}
+    #main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+    .outer-box{width:100%;height:56px;display:flex;justify-content:center;align-items:center;background-color:var(--white);box-shadow:0 2px 4px rgba(0,0,0,0.05);flex-shrink:0;padding:0 var(--spacing-6x)}
+    .header-inner{width:100%;display:flex;align-items:center;justify-content:space-between;gap:var(--spacing-3x)}
+    .search-field{display:flex;align-items:center;gap:var(--spacing-2x);flex:1;max-width:360px;background:var(--Neutral-N-200);border:1px solid var(--Neutral-N-200);border-radius:var(--awe-card-border-radius);padding:var(--spacing-2x) var(--spacing-3x);color:var(--text-caption)}
+    .search-field input{border:none;background:transparent;outline:none;font-family:inherit;font-size:var(--font-font-size-label);color:var(--text-body);flex:1}
+    .header-right{display:flex;align-items:center;gap:var(--spacing-3x)}
+    .circular-icon{width:36px;height:36px;border-radius:50%;border:0.5px solid var(--Neutral-N-200);background:var(--Neutral-N-200);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;color:var(--icons-neutral-icon);transition:background 0.2s}
+    .avatar-container{position:relative;width:32px;height:32px;display:grid;place-items:center;border-radius:9999px;background:var(--Neutral-N-200)}
+    .avatar-img{width:32px;height:32px;border-radius:9999px;background:var(--button-primary-bg-action);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:var(--font-font-weight-bold);color:var(--text-white)}
+    #content{flex:1;overflow-y:auto;background:var(--Neutral-N-100)}
+    .page{display:none;padding:var(--spacing-8x)}
+    .page.active{display:block}
+    .kanban-board{display:flex;gap:var(--spacing-4x);align-items:flex-start}
+    .kanban-col{flex:1;background:var(--surface);border-radius:var(--awe-card-border-radius);box-shadow:var(--awe-card-shadow);display:flex;flex-direction:column;min-width:220px}
+    .kanban-col-header{padding:var(--spacing-4x);background:var(--Neutral-N-200);border-bottom:1px solid var(--Neutral-N-200);display:flex;align-items:center;gap:var(--spacing-2x)}
+    .kanban-col-title{font-size:var(--font-font-size-heading-5);font-weight:var(--font-font-weight-bold);color:var(--text-title)}
+    .kanban-col-summary{font-size:var(--font-font-size-label);color:var(--text-caption);margin-left:auto}
+    .kanban-col-timestamp{font-size:10px;color:var(--text-caption);margin-left:var(--spacing-2x)}
+    .kanban-add-btn{margin-left:var(--spacing-2x)}
+    .kanban-cards{flex:1;padding:var(--spacing-4x);display:flex;flex-direction:column;gap:var(--spacing-3x)}
+    .kanban-card{background:var(--Neutral-N-100);border-radius:var(--awe-card-border-radius);box-shadow:var(--awe-card-shadow);padding:var(--spacing-4x);display:flex;flex-direction:column;gap:var(--spacing-2x);min-height:60px}
+    .kanban-card-title{font-size:var(--font-font-size-body);font-weight:var(--font-font-weight-bold);color:var(--text-title)}
+    .kanban-card-desc{font-size:var(--font-font-size-label);color:var(--text-caption)}
+    .kanban-card-meta{font-size:11px;color:var(--text-caption)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--btn-gap);border:none;cursor:pointer;transition:all 0.2s ease;position:relative;overflow:hidden;font-family:var(--font-font-family-body);white-space:nowrap;font-weight:var(--font-font-weight-medium);line-height:1.5;border-radius:var(--btn-border-radius);text-align:center;min-width:6.25rem;font-size:var(--btn-font-size-md);padding:var(--btn-padding-md);background:var(--button-primary-bg-action);color:var(--button-primary-label-action)}
+    .btn:hover{background:var(--button-primary-hover-action)}
+    .btn.secondary{background:var(--button-secondary-bg-bg);border:1px solid var(--button-secondary-border-action);color:var(--button-secondary-label-action)}
+    .btn.secondary:hover{border-color:var(--focused-selected-ring)}
+    .btn.sm{font-size:var(--btn-font-size-sm);padding:var(--btn-padding-sm);min-width:50px}
+    .btn.filled{background:var(--button-primary-bg-action);color:var(--button-primary-label-action)}
+    .btn.filled:hover{background:var(--button-primary-hover-action)}
+    .btn-grp{display:flex;gap:var(--spacing-2x);flex-wrap:wrap}
+    .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(40,46,66,0.15);z-index:1000;display:flex;align-items:center;justify-content:center}
+    .modal{background:var(--surface);border-radius:var(--awe-card-border-radius);box-shadow:var(--awe-card-shadow-elevated);padding:var(--spacing-8x) var(--spacing-10x);min-width:320px;min-height:180px;display:flex;flex-direction:column;gap:var(--spacing-4x)}
+    .popup{background:var(--Neutral-N-100);border-radius:var(--awe-card-border-radius);box-shadow:var(--awe-card-shadow);padding:var(--spacing-6x) var(--spacing-8x);min-width:220px;min-height:120px;display:flex;flex-direction:column;gap:var(--spacing-3x);position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:1001}
+    .error-msg{background:var(--button-danger-hover-bg);border-radius:var(--awe-card-border-radius);color:var(--button-primary-bg-danger);font-weight:var(--font-font-weight-bold);padding:var(--spacing-5x) var(--spacing-8x);margin:20px 0}
+    .inp,.txa,select{width:100%;height:38px;background:var(--Neutral-N-100);border-radius:var(--awe-card-border-radius);border:1.5px solid var(--button-secondary-border-action);margin-bottom:var(--spacing-2x);padding:0 var(--spacing-3x);font-family:inherit;font-size:var(--font-font-size-body)}
+    .txa{height:70px;resize:vertical;padding:var(--spacing-3x)}
+    .fgrp{margin-bottom:var(--spacing-4x)}
+    @media (max-width:900px){.kanban-board{flex-direction:column}}
+    @media (max-width:768px){.kanban-board{flex-direction:column}}
+    @media (max-width:480px){.sidebar-container{width:80px}.sidebar{padding:var(--spacing-3x)}.kanban-board{flex-direction:column}}
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="sidebar-container">
+    <nav class="sidebar">
+      <div class="sidebar-brand"><span class="brand-icon">KB</span><span class="brand-name">Kanban<span>App</span></span></div>
+      <div class="sidebar-section-label">SCENARIOS</div>
+      <ul>
+        <li class="selected" onclick="show('page-1',this)"><span>1.0 Kanban Board Homepage</span></li>
+        <li onclick="show('page-2',this)"><span>1.1 Responsive Kanban Board</span></li>
+        <li onclick="show('page-3',this)"><span>Pu.1 Welcome Pop-Up</span></li>
+        <li onclick="show('page-4',this)"><span>2.0 Kanban Board with Drag-and-Drop</span></li>
+        <li onclick="show('page-5',this)"><span>Er.1 Error State</span></li>
+        <li onclick="show('page-6',this)"><span>2.1 Kanban Board with Card Selection</span></li>
+        <li onclick="show('page-7',this)"><span>3.0 Kanban Board with Inline Add</span></li>
+        <li onclick="show('page-8',this)"><span>Pu.2 Confirmation Pop-Up</span></li>
+        <li onclick="show('page-9',this)"><span>Pu.3 Task Creation Modal</span></li>
+        <li onclick="show('page-10',this)"><span>4.0 Kanban Board with Inline Edit</span></li>
+        <li onclick="show('page-11',this)"><span>Pu.4 Edit Confirmation Pop-Up</span></li>
+        <li onclick="show('page-12',this)"><span>Pu.5 Edit Task Modal</span></li>
+        <li onclick="show('page-13',this)"><span>Er.2 Error State: Missing Columns</span></li>
+        <li onclick="show('page-14',this)"><span>Pu.6 Guided Setup Pop-Up</span></li>
+        <li onclick="show('page-15',this)"><span>Pu.7 Support Contact Pop-Up</span></li>
+      </ul>
+      <div class="sb-footer">
+        <div class="sb-footer-text">KanbanApp v1.0<br><strong>© 2024 KanbanApp Inc.</strong></div>
+      </div>
+    </nav>
+  </div>
+  <div id="main">
+    <div class="outer-box">
+      <div class="header-inner">
+        <div class="search-field"><input placeholder="Search tasks" aria-label="Search tasks"></div>
+        <div class="header-right">
+          <div class="circular-icon" title="Notifications">🔔</div>
+          <div class="avatar-container"><div class="avatar-img">AU</div></div>
+        </div>
+      </div>
+    </div>
+    <div id="content">
+      <!-- 1.0 Kanban Board Homepage -->
+      <div class="page active" id="page-1">
+        <div class="kanban-board">
+          <div class="kanban-col" aria-label="To Do">
+            <div class="kanban-col-header">
+              <span class="kanban-col-title">To Do</span>
+              <span class="kanban-col-summary">5 tasks</span>
+              <span class="kanban-col-timestamp">Last updated: 10:15am</span>
+              <button class="btn secondary kanban-add-btn">+ Add Task</button>
+            </div>
+            <div class="kanban-cards">
+              <div class="kanban-card" aria-label="Task Card">
+                <div class="kanban-card-title">Wire up API integration</div>
+                <div class="kanban-card-desc">Connect backend endpoints for new features</div>
+                <div class="kanban-card-meta">Alex · Due 6/1</div>
+              </div>
+              <div class="kanban-card">Update docs</div>
+            </div>
+          </div>
+          <div class="kanban-col" aria-label="In Progress">
+            <div class="kanban-col-header">
+              <span class="kanban-col-title">In Progress</span>
+              <span class="kanban-col-summary">3 tasks</span>
+              <span class="kanban-col-timestamp">Last updated: 09:50am</span>
+              <button class="btn secondary kanban-add-btn">+ Add Task</button>
+            </div>
+            <div class="kanban-cards">
+              <div class="kanban-card">
+                <div class="kanban-card-title">Refactor UI state</div>
+                <div class="kanban-card-desc">Improve Kanban drag state logic</div>
+                <div class="kanban-card-meta">Priya · Due 6/4</div>
+              </div>
+              <div class="kanban-card">Test drag-and-drop</div>
+            </div>
+          </div>
+          <div class="kanban-col" aria-label="Done">
+            <div class="kanban-col-header">
+              <span class="kanban-col-title">Done</span>
+              <span class="kanban-col-summary">7 tasks</span>
+              <span class="kanban-col-timestamp">Last updated: 08:30am</span>
+              <button class="btn secondary kanban-add-btn">+ Add Task</button>
+            </div>
+            <div class="kanban-cards">
+              <div class="kanban-card">
+                <div class="kanban-card-title">Initial board setup</div>
+                <div class="kanban-card-desc">Board structure & columns</div>
+                <div class="kanban-card-meta">Jamie · Due 5/30</div>
+              </div>
+              <div class="kanban-card">Accessibility review</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 1.1 Responsive Kanban Board -->
+      <div class="page" id="page-2">
+        <div class="kanban-board" style="flex-direction:column">
+          <div class="kanban-col" aria-label="To Do">
+            <div class="kanban-col-header">
+              <span class="kanban-col-title">To Do</span>
+              <span class="kanban-col-summary">5 tasks</span>
+              <button class="btn secondary kanban-add-btn">+ Add Task</button>
+            </div>
+            <div class="kanban-cards"><div class="kanban-card">Wire up API integration</div></div>
+          </div>
+          <div class="kanban-col" aria-label="In Progress">
+            <div class="kanban-col-header">
+              <span class="kanban-col-title">In Progress</span>
+              <span class="kanban-col-summary">3 tasks</span>
+              <button class="btn secondary kanban-add-btn">+ Add Task</button>
+            </div>
+            <div class="kanban-cards"><div class="kanban-card">Refactor UI state</div></div>
+          </div>
+          <div class="kanban-col" aria-label="Done">
+            <div class="kanban-col-header">
+              <span class="kanban-col-title">Done</span>
+              <span class="kanban-col-summary">7 tasks</span>
+              <button class="btn secondary kanban-add-btn">+ Add Task</button>
+            </div>
+            <div class="kanban-cards"><div class="kanban-card">Initial board setup</div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Pu.1 Welcome Pop-Up -->
+      <div class="page" id="page-3">
+        <div class="popup">
+          <div style="font-weight:700;font-size:18px;">Welcome to Kanban Board!</div>
+          <div>• Instantly see tasks by status<br>• Drag or select cards to move<br>• Add, edit, and manage cards inline or in modals<br>• Accessible for all users</div>
+          <div class="btn-grp" style="margin-top:16px;">
+            <button class="btn" onclick="show('page-1',document.querySelectorAll('.sidebar li')[0])">Got it &rarr; Board</button>
+          </div>
+        </div>
+      </div>
+      <!-- 2.0 Kanban Board with Drag-and-Drop -->
+      <div class="page" id="page-4">
+        <div class="kanban-board">
+          <div class="kanban-col" aria-label="To Do">
+            <div class="kanban-col-header"><span class="kanban-col-title">To Do</span></div>
+            <div class="kanban-cards">
+              <div class="kanban-card" draggable="true">Drag to In Progress</div>
+            </div>
+          </div>
+          <div class="kanban-col" aria-label="In Progress">
+            <div class="kanban-col-header"><span class="kanban-col-title">In Progress</span></div>
+            <div class="kanban-cards">
+              <div class="kanban-card" draggable="true">Drag to Done</div>
+            </div>
+          </div>
+          <div class="kanban-col" aria-label="Done">
+            <div class="kanban-col-header"><span class="kanban-col-title">Done</span></div>
+            <div class="kanban-cards">
+              <div class="kanban-card">Dragged card here</div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-grp" style="margin-top:24px;">
+          <button class="btn" onclick="show('page-5',document.querySelectorAll('.sidebar li')[4])">Simulate Invalid Drop → Error State</button>
+        </div>
+      </div>
+      <!-- Er.1 Error State -->
+      <div class="page" id="page-5">
+        <div class="error-msg" aria-live="assertive">Invalid drop: Card cannot be moved to this column</div>
+        <div class="btn-grp">
+          <button class="btn" onclick="show('page-4',document.querySelectorAll('.sidebar li')[3])">Back to Kanban Board</button>
+        </div>
+      </div>
+      <!-- 2.1 Kanban Board with Card Selection -->
+      <div class="page" id="page-6">
+        <div class="kanban-board">
+          <div class="kanban-col" aria-label="To Do">
+            <div class="kanban-col-header"><span class="kanban-col-title">To Do</span></div>
+            <div class="kanban-cards">
+              <div class="kanban-card">
+                <div>Select Card</div>
+                <div class="btn-grp">
+                  <button class="btn sm">Move to In Progress</button>
+                  <button class="btn sm">Move to Done</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="kanban-col" aria-label="In Progress">
+            <div class="kanban-col-header"><span class="kanban-col-title">In Progress</span></div>
+            <div class="kanban-cards">
+              <div class="kanban-card">
+                <div>Select Card</div>
+                <div class="btn-grp">
+                  <button class="btn sm">Move to To Do</button>
+                  <button class="btn sm">Move to Done</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="kanban-col" aria-label="Done">
+            <div class="kanban-col-header"><span class="kanban-col-title">Done</span></div>
+            <div class="kanban-cards">
+              <div class="kanban-card">
+                <div>Select Card</div>
+                <div class="btn-grp">
+                  <button class="btn sm">Move to To Do</button>
+                  <button class="btn sm">Move to In Progress</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-grp" style="margin-top:24px;">
+          <button class="btn" onclick="show('page-5',document.querySelectorAll('.sidebar li')[4])">Simulate Invalid Move → Error State</button>
+        </div>
+      </div>
+      <!-- 3.0 Kanban Board with Inline Add -->
+      <div class="page" id="page-7">
+        <div class="kanban-board">
+          <div class="kanban-col" aria-label="To Do">
+            <div class="kanban-col-header">
+              <span class="kanban-col-title">To Do</span>
+              <button class="btn secondary kanban-add-btn">+ Add Task</button>
+            </div>
+            <div class="kanban-cards">
+              <form class="fgrp">
+                <input class="inp" placeholder="Task Title" aria-label="Task Title">
+                <textarea class="txa" placeholder="Task Description" aria-label="Task Description"></textarea>
+                <input class="inp" placeholder="Assignee" aria-label="Assignee">
+                <input class="inp" placeholder="Due Date" aria-label="Due Date">
+                <button class="btn filled" type="button" onclick="show('page-8',document.querySelectorAll('.sidebar li')[7])">Add Task</button>
+              </form>
+              <div class="kanban-card">Existing Task</div>
+            </div>
+          </div>
+          <div class="kanban-col" aria-label="In Progress">
+            <div class="kanban-col-header">
+              <span class="kanban-col-title">In Progress</span>
+              <button class="btn secondary kanban-add-btn">+ Add Task</button>
+            </div>
+            <div class="kanban-cards"><div class="kanban-card">Existing Task</div></div>
+          </div>
+          <div class="kanban-col" aria-label="Done">
+            <div class="kanban-col-header">
+              <span class="kanban-col-title">Done</span>
+              <button class="btn secondary kanban-add-btn">+ Add Task</button>
+            </div>
+            <div class="kanban-cards"><div class="kanban-card">Existing Task</div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Pu.2 Confirmation Pop-Up -->
+      <div class="page" id="page-8">
+        <div class="popup">
+          <div>Task successfully added to To Do column</div>
+          <div class="btn-grp">
+            <button class="btn" onclick="show('page-7',document.querySelectorAll('.sidebar li')[6])">Add Another Task</button>
+            <button class="btn" onclick="show('page-1',document.querySelectorAll('.sidebar li')[0])">Go to Board Homepage</button>
+          </div>
+        </div>
+      </div>
+      <!-- Pu.3 Task Creation Modal -->
+      <div class="page" id="page-9">
+        <div class="modal-overlay">
+          <div class="modal">
+            <form class="fgrp">
+              <input class="inp" placeholder="Task Title" aria-label="Task Title">
+              <textarea class="txa" placeholder="Task Description" aria-label="Task Description"></textarea>
+              <input class="inp" placeholder="Assignee" aria-label="Assignee">
+              <input class="inp" placeholder="Due Date" aria-label="Due Date">
+              <button class="btn filled" type="button" onclick="show('page-7',document.querySelectorAll('.sidebar li')[6])">Create Task</button>
+            </form>
+            <div class="btn-grp">
+              <button class="btn secondary" onclick="show('page-7',document.querySelectorAll('.sidebar li')[6])">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 4.0 Kanban Board with Inline Edit -->
+      <div class="page" id="page-10">
+        <div class="kanban-board">
+          <div class="kanban-col" aria-label="To Do">
+            <div class="kanban-col-header"><span class="kanban-col-title">To Do</span></div>
+            <div class="kanban-cards">
+              <form class="fgrp">
+                <input class="inp" value="Task Title" aria-label="Task Title">
+                <textarea class="txa" aria-label="Task Description">Task Description</textarea>
+                <input class="inp" value="Assignee" aria-label="Assignee">
+                <input class="inp" value="Due Date" aria-label="Due Date">
+                <button class="btn filled" type="button" onclick="show('page-11',document.querySelectorAll('.sidebar li')[10])">Save Edit</button>
+              </form>
+              <div class="kanban-card">Other Task</div>
+            </div>
+          </div>
+          <div class="kanban-col" aria-label="In Progress">
+            <div class="kanban-col-header"><span class="kanban-col-title">In Progress</span></div>
+            <div class="kanban-cards"><div class="kanban-card">Task</div></div>
+          </div>
+          <div class="kanban-col" aria-label="Done">
+            <div class="kanban-col-header"><span class="kanban-col-title">Done</span></div>
+            <div class="kanban-cards"><div class="kanban-card">Task</div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Pu.4 Edit Confirmation Pop-Up -->
+      <div class="page" id="page-11">
+        <div class="popup">
+          <div>Task updated successfully</div>
+          <div class="btn-grp">
+            <button class="btn" onclick="show('page-10',document.querySelectorAll('.sidebar li')[9])">Edit Another Task</button>
+            <button class="btn" onclick="show('page-1',document.querySelectorAll('.sidebar li')[0])">Go to Board Homepage</button>
+          </div>
+        </div>
+      </div>
+      <!-- Pu.5 Edit Task Modal -->
+      <div class="page" id="page-12">
+        <div class="modal-overlay">
+          <div class="modal">
+            <form class="fgrp">
+              <input class="inp" value="Task Title" aria-label="Task Title">
+              <textarea class="txa" aria-label="Task Description">Task Description</textarea>
+              <input class="inp" value="Assignee" aria-label="Assignee">
+              <input class="inp" value="Due Date" aria-label="Due Date">
+              <button class="btn filled" type="button" onclick="show('page-10',document.querySelectorAll('.sidebar li')[9])">Save Changes</button>
+            </form>
+            <div class="btn-grp">
+              <button class="btn secondary" onclick="show('page-10',document.querySelectorAll('.sidebar li')[9])">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Er.2 Error State: Missing Columns -->
+      <div class="page" id="page-13">
+        <div class="error-msg" aria-live="assertive">Kanban board misconfigured: Columns missing</div>
+        <div class="btn-grp">
+          <button class="btn" onclick="show('page-14',document.querySelectorAll('.sidebar li')[13])">Configure Columns</button>
+          <button class="btn secondary" onclick="show('page-15',document.querySelectorAll('.sidebar li')[14])">Contact Support</button>
+        </div>
+      </div>
+      <!-- Pu.6 Guided Setup Pop-Up -->
+      <div class="page" id="page-14">
+        <div class="popup">
+          <div>Step 1: Add Column Name</div>
+          <input class="inp" placeholder="Column Name">
+          <div>Step 2: Select Column Type</div>
+          <select class="inp">
+            <option>To Do</option>
+            <option>In Progress</option>
+            <option>Done</option>
+          </select>
+          <div class="btn-grp">
+            <button class="btn filled">Save Column</button>
+            <button class="btn secondary">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <!-- Pu.7 Support Contact Pop-Up -->
+      <div class="page" id="page-15">
+        <div class="popup">
+          <div>Need help?</div>
+          <div>Email: support@kanbanapp.com</div>
+          <div>FAQ: <a href="#">kanbanapp.com/faq</a></div>
+          <div class="btn-grp">
+            <button class="btn secondary" onclick="show('page-13',document.querySelectorAll('.sidebar li')[12])">Back to Error</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function show(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.sidebar li').forEach(n=>n.classList.remove('selected'));
+  if(el)el.classList.add('selected');
+}
+</script>
+</body>
+</html>
