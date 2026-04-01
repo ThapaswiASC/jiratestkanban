@@ -1,249 +1,174 @@
-# UX User Workflow Documentation: Three-Column Kanban Board
+# UX Workflow Documentation: Three-Column Kanban Board
 
 ## Experience Mindset
 
-The Kanban board is a core productivity and workflow management tool for users managing tasks. The experience includes scenarios such as viewing tasks, updating task status, and adapting to different devices (desktop, tablet, mobile). Accessibility and scalability are foundational to the experience.
+**User:** Project Manager, Team Member, QA Analyst
+
+**Experience:** Task Management, Progress Tracking, Collaboration, Accessibility
 
 ---
 
-## 1. SCENARIOS & WORKFLOW VARIATIONS
+### SCENARIO 1: Viewing and Navigating the Kanban Board
 
-### Scenario 1: User views and interacts with the Kanban board on desktop
+#### Scenario A: Project Manager accesses the Kanban board to get an overview of task progress
+- **Context:** Project Manager logs in and lands on the Kanban board dashboard.
+- **Action:** Views all tasks across 'To Do', 'In Progress', and 'Done' columns.
+- **Actor:** Project Manager
+- **Goal:** Quickly and accurately assess project status and bottlenecks.
 
-**Variation A:** Standard interaction (mouse/trackpad)
-**Variation B:** Keyboard-only navigation (accessibility focus)
-
-#### Scenario Context:
-- User: Project manager or team member
-- Situation: Needs to view, update, and manage tasks for a project
-- Action: Views Kanban board, moves tasks between columns, checks status
-- Actor: User (with/without accessibility needs)
-- Goal: Efficiently manage and update tasks
-
-#### User Goal
-- To view all tasks clearly and move them between columns quickly and accurately
-
-#### Business Goal
-- To maximize team productivity and ensure all users (including those with disabilities) can efficiently use the Kanban board
-
-##### Workflow 1A: Mouse/Trackpad (Standard)
-
-1.0 Kanban Board Home
-- **Page Goal:** Present a clear, organized view of all tasks by status
-- **Description:**
-  - Board displays three columns: 'To Do', 'In Progress', 'Done'
-  - Each column has a header, colored and labeled
-  - Tasks (cards) are shown under appropriate columns
-  - Visual separators between columns
-  - Responsive to window resizing
-- **Design Problems:**
-  - HMW keep the interface clutter-free with many tasks?
-  - HMW visually distinguish columns while maintaining harmony?
-- **Design Opportunities:**
-  - What if columns can be collapsed/expanded?
-  - What if the user can customize column colors?
-
-1.1 Task Card Details Pop-Up (Pu.1)
-- **Page Goal:** Show task information without leaving the board
-- **Description:**
-  - Clicking a card opens details in a modal/pop-up
-  - Allows editing task info
-- **Design Problems:**
-  - HMW prevent users from losing context?
-- **Design Opportunities:**
-  - What if pop-up is draggable?
-
-1.2 Drag-and-Drop Interaction
-- **Page Goal:** Allow intuitive task movement
-- **Description:**
-  - User drags card to new column
-  - Visual feedback shows drop target
-- **Design Problems:**
-  - HMW ensure accessible drag-and-drop?
-- **Design Opportunities:**
-  - What if undo/redo is available?
-
-Er.1 Error: Failed to Move Task
-- **Goal:** Alert user to action failure, provide recovery
-- **Description:**
-  - Toast or modal with error message
-
-##### Workflow 1B: Keyboard-Only Navigation
-
-1.0 Kanban Board Home (with focus indicators)
-- **Page Goal:** Same as above
-- **Description:**
-  - All interactive elements reachable via Tab
-  - ARIA labels on columns and cards
-  - Focus states visually clear
-- **Design Problems:**
-  - HMW ensure efficient keyboard navigation order?
-- **Design Opportunities:**
-  - What if user can jump between columns with shortcuts?
-
-1.1 Card Actions Menu (Pu.2)
-- **Page Goal:** Manage card without mouse
-- **Description:**
-  - Pressing Enter/Space opens menu for move/edit/delete
-  - All menu items accessible via arrow keys
-
-Er.2 Accessibility Alert
-- **Goal:** Inform user of inaccessible actions
-- **Description:**
-  - Screen reader and visual message if action not possible
-
-##### Sequence Example:
-1.0 Kanban Board Home → 1.1 Task Card Details Pop-Up → 1.2 Drag-and-Drop Interaction → Er.1 Error: Failed to Move Task
+#### Scenario B: Team Member uses keyboard navigation and screen reader to access Kanban board
+- **Context:** Team Member with accessibility needs logs in and uses assistive technology.
+- **Action:** Navigates columns and cards using keyboard and screen reader.
+- **Actor:** Team Member
+- **Goal:** Efficiently access and understand task information without barriers.
 
 ---
 
-### Scenario 2: User accesses Kanban board on mobile/tablet (responsive behavior)
+## Workflow Design Variations
 
-**Variation A:** Mobile portrait
-**Variation B:** Tablet landscape
+### Workflow 1: Standard Visual Navigation
+- **User Goal:** To easily view and understand the status of tasks across the project.
+- **Business Goal:** To increase transparency and accountability in task progress.
 
-#### Scenario Context:
-- User: Team member on the go
-- Situation: Needs to check/update tasks from mobile device
-- Action: Views Kanban board, interacts with tasks
-- Actor: User
-- Goal: Access and manage tasks efficiently on small screens
+#### Screens:
 
-#### User Goal
-- To quickly check and update tasks from any device
-
-#### Business Goal
-- To provide a seamless, scalable Kanban experience across all devices
-
-##### Workflow 2A: Mobile Portrait
-
-2.0 Kanban Board Mobile View
-- **Page Goal:** Present Kanban in a single-column scrollable layout
-- **Description:**
-  - Columns stack vertically
-  - Sticky headers for each column
-  - Cards easy to tap
-  - Hamburger menu for board settings
+##### 1.0 Kanban Board Overview
+- **Page Goal:** Present a clear, accessible layout of all tasks and columns.
+- **Screen Description:**
+  - Three horizontally aligned columns: 'To Do', 'In Progress', 'Done'.
+  - Column headers styled with distinct colors (as per design tokens).
+  - Cards show task title, assignee, and status.
+  - Responsive breakpoints: mobile (single column scroll), tablet (two columns), desktop (three columns).
 - **Design Problems:**
-  - HMW avoid excessive scrolling?
-  - HMW maintain clarity with limited space?
+  - HMW ensure columns remain visually distinct across breakpoints?
+  - HMW surface key task info without clutter?
 - **Design Opportunities:**
-  - What if user can filter to show only one column at a time?
+  - What if users can customize column order?
+  - What if board auto-highlights overdue tasks?
 
-2.1 Card Quick Actions (Pu.3)
-- **Page Goal:** Fast access to edit/move
-- **Description:**
-  - Swipe on card reveals actions
-
-Er.3 Mobile Network Error
-- **Goal:** Alert user to sync issues
-- **Description:**
-  - Banner or toast, retry option
-
-##### Workflow 2B: Tablet Landscape
-
-2.0 Kanban Board Tablet View
-- **Page Goal:** Show all three columns side by side (with adjusted spacing)
-- **Description:**
-  - Responsive column widths
-  - Touch-friendly drag-and-drop
+##### 1.1 Card Details Pop-Up (Pu.1)
+- **Page Goal:** Provide in-depth task details without leaving the board.
+- **Screen Description:**
+  - Pop-up triggered by clicking a card.
+  - Includes task description, due date, comments, and attachments.
 - **Design Problems:**
-  - HMW balance information density and tap targets?
+  - HMW ensure pop-up is accessible (focus management, ARIA labels)?
 - **Design Opportunities:**
-  - What if columns can be resized by user?
+  - What if pop-up supports quick actions (mark as done, assign)?
 
----
-
-### Scenario 3: User customizes Kanban board appearance (scalability/design tokens)
-
-**Variation A:** Change color scheme
-**Variation B:** Adjust column order
-
-#### Scenario Context:
-- User: Project manager
-- Situation: Wants to personalize board for team needs
-- Action: Accesses settings, adjusts appearance
-- Actor: User
-- Goal: Make board more usable for team
-
-#### User Goal
-- To tailor the Kanban board to fit workflow and preferences
-
-#### Business Goal
-- To increase adoption and satisfaction by supporting customization
-
-##### Workflow 3A: Change Color Scheme
-
-3.0 Board Settings
-- **Page Goal:** Allow color and theme changes
-- **Description:**
-  - User selects from preset color palettes
-  - Preview updates live
+##### Er.1 Error State: Board Load Failure
+- **Page Goal:** Inform user of loading issues and offer retry.
+- **Screen Description:**
+  - Error message with retry button.
 - **Design Problems:**
-  - HMW ensure accessibility with custom colors?
+  - HMW make error actionable and not frustrating?
 - **Design Opportunities:**
-  - What if system suggests accessible palettes?
+  - What if error state suggests offline mode?
 
-3.1 Save/Reset Confirmation (Pu.4)
-- **Page Goal:** Confirm changes
-- **Description:**
-  - Modal to save or revert
+##### Sequence:
+1.0 Kanban Board Overview → 1.1 Card Details Pop-Up → Er.1 Error State
 
-##### Workflow 3B: Adjust Column Order
+---
 
-3.0 Board Settings (same as above)
+### Workflow 2: Accessible Navigation (Keyboard/Screen Reader)
+- **User Goal:** To allow users with disabilities to navigate the Kanban board efficiently.
+- **Business Goal:** To meet accessibility standards and broaden user base.
 
-3.2 Reorder Columns
-- **Page Goal:** Drag-and-drop to reorder columns
-- **Description:**
-  - Accessible via mouse and keyboard
+#### Screens:
+
+##### 2.0 Accessible Kanban Board
+- **Page Goal:** Ensure full accessibility for board navigation and task interaction.
+- **Screen Description:**
+  - Columns and cards have ARIA labels.
+  - Keyboard navigation (Tab, Arrow keys) supported.
+  - Focus states clearly visible.
+  - Screen reader announces column headers and card info.
 - **Design Problems:**
-  - HMW persist changes across devices?
+  - HMW support screen reader announcements for dynamic content?
+  - HMW maintain usability for both mouse and keyboard users?
 - **Design Opportunities:**
-  - What if user can save multiple layouts?
+  - What if board offers personalized accessibility settings?
+
+##### 2.1 Keyboard Navigation Help Pop-Up (Pu.2)
+- **Page Goal:** Guide users on keyboard shortcuts and accessibility features.
+- **Screen Description:**
+  - Pop-up with shortcut list and accessibility tips.
+- **Design Problems:**
+  - HMW make help easily discoverable but not intrusive?
+- **Design Opportunities:**
+  - What if help adapts to user's device/context?
+
+##### Er.2 Error State: Accessibility Feature Failure
+- **Page Goal:** Alert user if accessibility features (ARIA, keyboard nav) fail.
+- **Screen Description:**
+  - Clear error message with contact support option.
+- **Design Problems:**
+  - HMW make accessibility errors actionable?
+- **Design Opportunities:**
+  - What if error logs auto-send to support?
+
+##### Sequence:
+2.0 Accessible Kanban Board → 2.1 Keyboard Navigation Help Pop-Up → Er.2 Error State
 
 ---
 
-## 2. LIST OF SCREENS
+### Minimum Viable Experience (MVE)
 
-- 1.0 Kanban Board Home
-- 1.1 Task Card Details Pop-Up (Pu.1)
-- 1.2 Drag-and-Drop Interaction
-- 1.1 Card Actions Menu (Pu.2)
-- 2.0 Kanban Board Mobile View
-- 2.1 Card Quick Actions (Pu.3)
-- 2.0 Kanban Board Tablet View
-- 3.0 Board Settings
-- 3.1 Save/Reset Confirmation (Pu.4)
-- 3.2 Reorder Columns
-- Er.1 Error: Failed to Move Task
-- Er.2 Accessibility Alert
-- Er.3 Mobile Network Error
+#### Scenario: New User discovers and interacts with Kanban board
+- **Context:** New user logs in for the first time.
+- **Action:** Views board, clicks a card, tries keyboard navigation.
+- **Actor:** New User
+- **Goal:** Understand board layout and interact with tasks.
+
+#### Workflow:
+- 1.0 Kanban Board Overview
+- 1.1 Card Details Pop-Up
+- 2.0 Accessible Kanban Board
+- 2.1 Keyboard Navigation Help Pop-Up
 
 ---
 
-## 3. ACCESSIBILITY & SCALABILITY PRINCIPLES
-
-- All columns and cards use ARIA labels and roles
-- Keyboard navigation with logical tab order and visible focus
-- Color contrast meets WCAG 2.1 AA
-- Design tokens for color, spacing, typography
-- Responsive breakpoints: mobile (320-767px), tablet (768-1023px), desktop (1024px+)
-- All pop-ups/modal dialogs are keyboard accessible and labeled
-- Error messages announced to screen readers
+## User and Business Goals
+- **User Goal:** To enable users to manage tasks visually and accessibly.
+- **Business Goal:** To drive project efficiency, inclusivity, and compliance.
 
 ---
 
-## 4. EDGE CASES
-
-- Large number of tasks: Virtualized list, lazy loading
-- No tasks in a column: Show empty state message
-- Network failures: Offline mode, retry options
-- Custom colors: Automatic contrast checks
-- User disables JavaScript: Graceful degradation with static board
+## List of Screens and Numbering
+- 1.0 Kanban Board Overview
+- 1.1 Card Details Pop-Up (Pu.1)
+- Er.1 Error State: Board Load Failure
+- 2.0 Accessible Kanban Board
+- 2.1 Keyboard Navigation Help Pop-Up (Pu.2)
+- Er.2 Error State: Accessibility Feature Failure
 
 ---
 
-## 5. SUMMARY
+## Design Problems & Opportunities
+- HMW maintain distinct columns across devices?
+- HMW support both visual and accessible navigation?
+- HMW make error states actionable?
+- What if board offers customizable layouts?
+- What if accessibility settings are user-specific?
 
-This documentation provides systematic, user-centered design workflows for a responsive, accessible, and scalable Kanban board. It balances user and business goals, ensures every scenario is covered, and highlights design problems and opportunities for continuous improvement.
+---
+
+## Accessibility & Scalability
+- ARIA labels for columns/cards
+- Focus states for keyboard navigation
+- Responsive breakpoints (mobile/tablet/desktop)
+- Design tokens for consistent spacing, colors, typography
+- Error handling for accessibility features
+
+---
+
+## Summary Sequence for Each Scenario/Workflow
+
+**Workflow 1:**
+1.0 Kanban Board Overview → 1.1 Card Details Pop-Up → Er.1 Error State
+
+**Workflow 2:**
+2.0 Accessible Kanban Board → 2.1 Keyboard Navigation Help Pop-Up → Er.2 Error State
+
+**Minimum Viable Experience:**
+1.0 Kanban Board Overview → 1.1 Card Details Pop-Up → 2.0 Accessible Kanban Board → 2.1 Keyboard Navigation Help Pop-Up
