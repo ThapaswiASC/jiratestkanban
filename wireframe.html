@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Kanban Board Wireframes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board Wireframe</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -16,7 +17,7 @@
       --w-label: #888888;
       --w-active: #555555;
     }
-    html, body { height: 100%; font-family: 'Courier New', Courier, monospace; background: var(--w-bg); color: var(--w-text); font-size: 12px; }
+    html, body { height: 100%; font-family: 'Courier New', Courier, monospace; background: var(--w-bg); color: var(--w-text); font-size: 13px; }
     #app { display: flex; height: 100vh; overflow: hidden; }
     #sidebar { width: 220px; flex-shrink: 0; background: var(--w-surface); border-right: 2px solid var(--w-border); display: flex; flex-direction: column; overflow-y: auto; }
     #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
@@ -76,7 +77,7 @@
     .step { flex: 1; height: 32px; background: var(--w-surface); border: 1px solid var(--w-border); border-right: none; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--w-label); }
     .step:last-child { border-right: 1px solid var(--w-border); }
     .step.active { background: var(--w-active); color: var(--w-surface); font-weight: bold; }
-    .step.done { background: var(--w-block); color: var(--w-text); font-weight: bold; }
+    .step.done { background: var(--w-block);  color: var(--w-text);    font-weight: bold; }
     .slot-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
     .slot { height: 28px; width: 72px; background: var(--w-block); border: 1px solid var(--w-border); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--w-text); cursor: pointer; }
     .slot:hover { background: var(--w-dark); }
@@ -108,381 +109,233 @@
     .ok-ring { width: 52px; height: 52px; border: 2px solid var(--w-stroke); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 22px; color: var(--w-stroke); }
     .cbox { background: var(--w-bg); border: 1px dashed var(--w-border); padding: 14px 16px; margin-bottom: 12px; }
     .divider { border: none; border-top: 1px dashed var(--w-border); margin: 12px 0; }
+    @media (max-width: 600px) {
+      #sidebar { width: 120px; }
+      #topbar { padding: 0 8px; }
+      .page { padding: 12px 6px; }
+      .g3, .g2 { gap: 6px; }
+    }
   </style>
 </head>
 <body>
-<div id="app">
-  <div id="sidebar">
-    <div class="sb-logo">
-      <div class="sb-logo-box">[ LOGO — Kanban Demo ]</div>
-    </div>
-    <div class="sb-section">Board Views</div>
-    <div class="nav-link active" onclick="show('page-1-0', this)">1.0 Desktop View</div>
-    <div class="nav-link" onclick="show('page-1-1', this)">1.1 Tablet View</div>
-    <div class="nav-link" onclick="show('page-1-2', this)">1.2 Mobile View</div>
-    <div class="nav-link" onclick="show('page-2-0', this)">2.0 Accessibility Board</div>
-    <div class="nav-link" onclick="show('page-er-1', this)">Er.1 Accessibility Issue</div>
-    <div class="sb-section">Interactions</div>
-    <div class="nav-link" onclick="show('page-3-0', this)">3.0 Drag & Drop Mode</div>
-    <div class="nav-link" onclick="show('page-pu-1', this)">Pu.1 Move Confirmation</div>
-    <div class="nav-link" onclick="show('page-4-0', this)">4.0 Keyboard Navigation</div>
-    <div class="nav-link" onclick="show('page-er-2', this)">Er.2 Invalid Move</div>
-    <div class="sb-section">Customization</div>
-    <div class="nav-link" onclick="show('page-5-0', this)">5.0 Settings Panel</div>
-    <div class="nav-link" onclick="show('page-pu-2', this)">Pu.2 Save Confirmation</div>
-    <div class="nav-link" onclick="show('page-6-0', this)">6.0 Quick Edit Overlay</div>
-    <div class="sb-footer">
-      <div class="sb-fline"></div>
-      <div class="sb-logo-box">Kanban v1.0</div>
-      <div style="font-size:10px;color:var(--w-label);">© 2024 Kanban Demo</div>
-    </div>
-  </div>
-  <div id="main">
-    <div id="topbar">
-      <div class="search-wf">[ Search box ________________________ ]</div>
-      <div class="topbar-right">
-        <div class="notif-wf">[ Notifications ]</div>
-        <div class="avatar-wf">JD</div>
-        <div class="topbar-name">[ Profile ]</div>
+  <div id="app">
+    <!-- Sidebar Navigation -->
+    <div id="sidebar">
+      <div class="sb-logo">
+        <div class="sb-logo-box">[ LOGO — KanbanApp ]</div>
+      </div>
+      <div class="sb-section">Kanban Board</div>
+      <div class="nav-link active" onclick="show('kanban-main', this)"><div class="nav-icon"></div>Kanban Board</div>
+      <div class="nav-link" onclick="show('task-popup', this)"><div class="nav-icon"></div>Task Card Detail</div>
+      <div class="nav-link" onclick="show('mobile-view', this)"><div class="nav-icon"></div>Mobile View</div>
+      <div class="nav-link" onclick="show('access-settings', this)"><div class="nav-icon"></div>Accessibility Settings</div>
+      <div class="nav-link" onclick="show('error-state', this)"><div class="nav-icon"></div>Error State</div>
+      <div class="sb-footer">
+        <div class="sb-fline"></div>
+        <div style="font-size:10px;">KanbanApp v1.0</div>
+        <div style="font-size:9px; color:var(--w-label);">© 2024 KanbanApp Inc.</div>
       </div>
     </div>
-    <div id="content">
-      <!-- Kanban Board - Desktop View -->
-      <div class="page active" id="page-1-0">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Kanban Board — Desktop ]</div>
-            <div class="ph-sub">[ Project: Demo Board ]</div>
-          </div>
-          <div class="bc-wf">[ Summary Bar: 12 Tasks ]</div>
-        </div>
-        <div class="g3">
-          <div class="card" aria-label="To Do Column">
-            <div class="card-title">[ To Do ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-          </div>
-          <div class="card" aria-label="In Progress Column">
-            <div class="card-title">[ In Progress ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-          </div>
-          <div class="card" aria-label="Done Column">
-            <div class="card-title">[ Done ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-          </div>
-        </div>
-        <div class="btn-grp">
-          <button class="btn" onclick="show('page-1-1')">Next: Tablet View →</button>
+    <div id="main">
+      <!-- Topbar -->
+      <div id="topbar">
+        <div class="search-wf">[ Search box ________________________ ]</div>
+        <div class="topbar-right">
+          <div class="notif-wf">[ Bell / Notif ]</div>
+          <div class="avatar-wf">AB</div>
+          <div class="topbar-name">[ Profile Name ]</div>
         </div>
       </div>
-      <!-- Kanban Board - Tablet View -->
-      <div class="page" id="page-1-1">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Kanban Board — Tablet ]</div>
-            <div class="ph-sub">[ Project: Demo Board ]</div>
-          </div>
-        </div>
-        <div class="g3">
-          <div class="card" aria-label="To Do Column">
-            <div class="card-title">[ To Do ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-          </div>
-          <div class="card" aria-label="In Progress Column">
-            <div class="card-title">[ In Progress ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-          </div>
-          <div class="card" aria-label="Done Column">
-            <div class="card-title">[ Done ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-          </div>
-        </div>
-        <div class="btn-grp">
-          <button class="btn" onclick="show('page-1-2')">Next: Mobile View →</button>
-          <button class="btn" onclick="show('page-1-0')">← Back: Desktop</button>
-        </div>
-      </div>
-      <!-- Kanban Board - Mobile View -->
-      <div class="page" id="page-1-2">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Kanban Board — Mobile ]</div>
-            <div class="ph-sub">[ Project: Demo Board ]</div>
-          </div>
-        </div>
-        <div class="tab-bar">
-          <div class="tab active" onclick="switchTab(this, 'mob-todo')">To Do</div>
-          <div class="tab" onclick="switchTab(this, 'mob-progress')">In Progress</div>
-          <div class="tab" onclick="switchTab(this, 'mob-done')">Done</div>
-        </div>
-        <div id="mob-todo" style="display:block;">
-          <div class="card" aria-label="To Do Column">
-            <div class="card-title">[ To Do ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-          </div>
-        </div>
-        <div id="mob-progress" style="display:none;">
-          <div class="card" aria-label="In Progress Column">
-            <div class="card-title">[ In Progress ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-          </div>
-        </div>
-        <div id="mob-done" style="display:none;">
-          <div class="card" aria-label="Done Column">
-            <div class="card-title">[ Done ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-          </div>
-        </div>
-        <div class="btn-grp">
-          <button class="btn" onclick="show('page-1-1')">← Back: Tablet</button>
-        </div>
-      </div>
-      <!-- Accessible Kanban Board -->
-      <div class="page" id="page-2-0">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Accessible Kanban Board ]</div>
-            <div class="ph-sub">[ High Contrast, ARIA, Keyboard Shortcuts ]</div>
-          </div>
-        </div>
-        <div class="g3">
-          <div class="card" aria-label="To Do Column" tabindex="0">
-            <div class="card-title" style="font-size:16px;font-weight:bold;">[ To Do ]</div>
-            <div class="ln w100" style="border:2px solid var(--w-stroke);">[ Task Card ]</div>
-          </div>
-          <div class="card" aria-label="In Progress Column" tabindex="0">
-            <div class="card-title" style="font-size:16px;font-weight:bold;">[ In Progress ]</div>
-            <div class="ln w100" style="border:2px solid var(--w-stroke);">[ Task Card ]</div>
-          </div>
-          <div class="card" aria-label="Done Column" tabindex="0">
-            <div class="card-title" style="font-size:16px;font-weight:bold;">[ Done ]</div>
-            <div class="ln w100" style="border:2px solid var(--w-stroke);">[ Task Card ]</div>
-          </div>
-        </div>
-        <div class="msg-bub">[ Screen reader instructions: Use Tab/Arrow keys to navigate columns and cards. ]</div>
-        <div class="btn-grp">
-          <button class="btn" onclick="show('page-er-1')">Accessibility Issue →</button>
-        </div>
-      </div>
-      <!-- Accessibility Issue Detected -->
-      <div class="page" id="page-er-1">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Accessibility Issue Detected ]</div>
-            <div class="ph-sub">[ Missing ARIA label or focus trap ]</div>
-          </div>
-        </div>
-        <div class="msg-bub">[ Alert: Accessibility issue detected. Please review ARIA labels and focus states. ]</div>
-        <div class="btn-grp">
-          <button class="btn" onclick="show('page-2-0')">← Back: Accessibility Board</button>
-        </div>
-      </div>
-      <!-- Drag-and-Drop Mode -->
-      <div class="page" id="page-3-0">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Kanban Board — Drag & Drop ]</div>
-            <div class="ph-sub">[ Move tasks by dragging cards ]</div>
-          </div>
-        </div>
-        <div class="g3">
-          <div class="card" aria-label="To Do Column">
-            <div class="card-title">[ To Do ]</div>
-            <div class="ln w100" style="border:2px dashed var(--w-stroke);">[ Draggable Task Card ]</div>
-          </div>
-          <div class="card" aria-label="In Progress Column">
-            <div class="card-title">[ In Progress ]</div>
-            <div class="ln w100" style="border:2px dashed var(--w-stroke);">[ Draggable Task Card ]</div>
-          </div>
-          <div class="card" aria-label="Done Column">
-            <div class="card-title">[ Done ]</div>
-            <div class="ln w100" style="border:2px dashed var(--w-stroke);">[ Draggable Task Card ]</div>
-          </div>
-        </div>
-        <div class="msg-bub">[ ARIA live region: Task moved to 'In Progress' ]</div>
-        <div class="btn-grp">
-          <button class="btn" onclick="show('page-pu-1')">Move Confirmation →</button>
-        </div>
-      </div>
-      <!-- Move Confirmation Pop-Up -->
-      <div class="page" id="page-pu-1">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Move Confirmation ]</div>
-            <div class="ph-sub">[ Confirm move of critical task ]</div>
-          </div>
-        </div>
-        <div class="cbox">[ Are you sure you want to move this task? ]</div>
-        <div class="btn-grp">
-          <button class="btn filled" onclick="show('page-3-0')">Confirm Move</button>
-          <button class="btn" onclick="show('page-3-0')">Cancel</button>
-        </div>
-      </div>
-      <!-- Keyboard Navigation Mode -->
-      <div class="page" id="page-4-0">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Kanban Board — Keyboard Navigation ]</div>
-            <div class="ph-sub">[ Move tasks using keyboard only ]</div>
-          </div>
-        </div>
-        <div class="g3">
-          <div class="card" aria-label="To Do Column" tabindex="0">
-            <div class="card-title">[ To Do ]</div>
-            <div class="ln w100" style="outline:2px solid var(--w-active);">[ Focused Task Card ]</div>
-          </div>
-          <div class="card" aria-label="In Progress Column" tabindex="0">
-            <div class="card-title">[ In Progress ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-          </div>
-          <div class="card" aria-label="Done Column" tabindex="0">
-            <div class="card-title">[ Done ]</div>
-            <div class="ln w100">[ Task Card ]</div>
-          </div>
-        </div>
-        <div class="msg-bub">[ Use Tab/Arrow/Enter/Space keys to move tasks. ]</div>
-        <div class="btn-grp">
-          <button class="btn" onclick="show('page-er-2')">Invalid Move →</button>
-        </div>
-      </div>
-      <!-- Invalid Move Error State -->
-      <div class="page" id="page-er-2">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Invalid Move ]</div>
-            <div class="ph-sub">[ Move not allowed ]</div>
-          </div>
-        </div>
-        <div class="msg-bub">[ Error: You cannot move this task to 'Done'. Board rules prevent this action. ]</div>
-        <div class="btn-grp">
-          <button class="btn" onclick="show('page-4-0')">← Back: Keyboard Navigation</button>
-        </div>
-      </div>
-      <!-- Settings Panel -->
-      <div class="page" id="page-5-0">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Settings Panel ]</div>
-            <div class="ph-sub">[ Customize columns and layout ]</div>
-          </div>
-        </div>
-        <div class="cbox">
-          <div class="fgrp">
-            <label class="lbl">[ Reorder Columns ]</label>
-            <div class="sel-grp">
-              <div class="sel-opt">[ To Do ]</div>
-              <div class="sel-opt">[ In Progress ]</div>
-              <div class="sel-opt">[ Done ]</div>
+      <div id="content">
+        <!-- Kanban Board Main Screen -->
+        <div class="page active" id="kanban-main">
+          <div class="ph">
+            <div>
+              <div class="ph-title">[ Kanban Board ]</div>
+              <div class="ph-sub">[ Overview of tasks and columns ]</div>
+            </div>
+            <div class="btn-grp">
+              <button class="btn" onclick="show('task-popup', document.querySelectorAll('.nav-link')[1])">[ + New Task ]</button>
+              <button class="btn" onclick="show('access-settings', document.querySelectorAll('.nav-link')[3])">[ Accessibility Settings ]</button>
             </div>
           </div>
-          <div class="fgrp">
-            <label class="lbl">[ Add Column ]</label>
-            <input class="inp" placeholder="[ New Column Name ]" />
-            <button class="btn sm">Add</button>
-          </div>
-          <div class="fgrp">
-            <label class="lbl">[ Remove Column ]</label>
-            <select class="inp">
-              <option>[ To Do ]</option>
-              <option>[ In Progress ]</option>
-              <option>[ Done ]</option>
-            </select>
-            <button class="btn sm">Remove</button>
-          </div>
-        </div>
-        <div class="btn-grp">
-          <button class="btn filled" onclick="show('page-pu-2')">Save Changes</button>
-        </div>
-      </div>
-      <!-- Save Changes Confirmation Pop-Up -->
-      <div class="page" id="page-pu-2">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Save Changes Confirmation ]</div>
-            <div class="ph-sub">[ Confirm and save layout changes ]</div>
-          </div>
-        </div>
-        <div class="cbox">[ Summary of changes: Columns reordered, 'Review' added, 'Done' removed. ]</div>
-        <div class="btn-grp">
-          <button class="btn filled">Confirm Save</button>
-          <button class="btn">Undo</button>
-          <button class="btn" onclick="show('page-5-0')">← Back: Settings Panel</button>
-        </div>
-      </div>
-      <!-- Quick Edit Overlay -->
-      <div class="page" id="page-6-0">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Quick Edit Overlay ]</div>
-            <div class="ph-sub">[ Inline column edits ]</div>
-          </div>
-        </div>
-        <div class="g3">
-          <div class="card">
-            <div class="wf-row">
-              <input class="inp w80" value="To Do" />
-              <button class="btn sm">Edit</button>
-              <button class="btn sm">Remove</button>
+          <div class="g3" style="min-height:320px;">
+            <div style="display:flex;flex-direction:column;">
+              <div class="card-title">[ To Do ]</div>
+              <div class="card">[ Task Card: Title, Status ]</div>
+              <div class="card">[ Task Card: Title, Status ]</div>
+              <div class="card">[ Task Card: Title, Status ]</div>
+            </div>
+            <div style="display:flex;flex-direction:column;">
+              <div class="card-title">[ In Progress ]</div>
+              <div class="card">[ Task Card: Title, Status ]</div>
+              <div class="card">[ Task Card: Title, Status ]</div>
+            </div>
+            <div style="display:flex;flex-direction:column;">
+              <div class="card-title">[ Done ]</div>
+              <div class="card">[ Task Card: Title, Status ]</div>
             </div>
           </div>
-          <div class="card">
-            <div class="wf-row">
-              <input class="inp w80" value="In Progress" />
-              <button class="btn sm">Edit</button>
-              <button class="btn sm">Remove</button>
-            </div>
+          <div class="btn-grp">
+            <button class="btn" onclick="show('task-popup', document.querySelectorAll('.nav-link')[1])">[ Edit Task ]</button>
+            <button class="btn" onclick="show('error-state', document.querySelectorAll('.nav-link')[4])">[ Move Task (Error) ]</button>
+            <button class="btn" onclick="show('mobile-view', document.querySelectorAll('.nav-link')[2])">[ Switch to Mobile View ]</button>
           </div>
-          <div class="card">
-            <div class="wf-row">
-              <input class="inp w80" value="Done" />
-              <button class="btn sm">Edit</button>
-              <button class="btn sm">Remove</button>
+          <div class="divider"></div>
+          <div style="font-size:11px;color:var(--w-label);">[ Drag-and-Drop & Keyboard Navigation Supported ]</div>
+        </div>
+        <!-- Task Card Detail Pop-Up -->
+        <div class="page" id="task-popup">
+          <div class="ph">
+            <div>
+              <div class="ph-title">[ Task Card Detail ]</div>
+              <div class="ph-sub">[ View and edit task details ]</div>
+            </div>
+            <button class="btn" onclick="show('kanban-main', document.querySelectorAll('.nav-link')[0])">[ Back to Board ]</button>
+          </div>
+          <div class="cbox" style="max-width:480px;margin:auto;">
+            <div class="fgrp">
+              <label class="lbl">[ Task Title ]</label>
+              <input class="inp" type="text" placeholder="[ Task Title ]" />
+            </div>
+            <div class="fgrp">
+              <label class="lbl">[ Description ]</label>
+              <textarea class="txa" placeholder="[ Task Description ]"></textarea>
+            </div>
+            <div class="fgrp">
+              <label class="lbl">[ Status ]</label>
+              <div class="radio-grp">
+                <div class="radio-opt">To Do</div>
+                <div class="radio-opt">In Progress</div>
+                <div class="radio-opt">Done</div>
+              </div>
+            </div>
+            <div class="fgrp">
+              <label class="lbl">[ Assignee ]</label>
+              <input class="inp" type="text" placeholder="[ Assignee ]" />
+            </div>
+            <div class="fgrp">
+              <label class="lbl">[ Due Date ]</label>
+              <input class="inp" type="date" />
+            </div>
+            <div class="btn-grp" style="margin-top:16px;">
+              <button class="btn filled">[ Save Changes ]</button>
+              <button class="btn" onclick="show('kanban-main', document.querySelectorAll('.nav-link')[0])">[ Cancel ]</button>
             </div>
           </div>
         </div>
-        <div class="btn-grp">
-          <button class="btn">Add Column</button>
+        <!-- Responsive Mobile View -->
+        <div class="page" id="mobile-view">
+          <div class="ph">
+            <div>
+              <div class="ph-title">[ Mobile Kanban Board ]</div>
+              <div class="ph-sub">[ Adapted for mobile usability ]</div>
+            </div>
+            <button class="btn" onclick="show('kanban-main', document.querySelectorAll('.nav-link')[0])">[ Back to Board ]</button>
+          </div>
+          <div style="margin-bottom:18px;">
+            <div class="tab-bar">
+              <div class="tab active" onclick="switchTab(this, 'mob-todo')">To Do</div>
+              <div class="tab" onclick="switchTab(this, 'mob-inprog')">In Progress</div>
+              <div class="tab" onclick="switchTab(this, 'mob-done')">Done</div>
+            </div>
+            <div id="mob-todo" style="display:block;">
+              <div class="card-title">[ To Do ]</div>
+              <div class="card">[ Task Card: Title, Status ]</div>
+              <div class="card">[ Task Card: Title, Status ]</div>
+            </div>
+            <div id="mob-inprog" style="display:none;">
+              <div class="card-title">[ In Progress ]</div>
+              <div class="card">[ Task Card: Title, Status ]</div>
+            </div>
+            <div id="mob-done" style="display:none;">
+              <div class="card-title">[ Done ]</div>
+              <div class="card">[ Task Card: Title, Status ]</div>
+            </div>
+          </div>
+          <div class="btn-grp">
+            <button class="btn" onclick="show('task-popup', document.querySelectorAll('.nav-link')[1])">[ Edit Task ]</button>
+            <button class="btn" onclick="show('kanban-main', document.querySelectorAll('.nav-link')[0])">[ Back to Board ]</button>
+          </div>
+          <div class="divider"></div>
+          <div style="font-size:11px;color:var(--w-label);">[ Horizontal Scroll / Stacked Columns for Mobile ]</div>
+        </div>
+        <!-- Accessibility Settings Screen -->
+        <div class="page" id="access-settings">
+          <div class="ph">
+            <div>
+              <div class="ph-title">[ Accessibility Settings ]</div>
+              <div class="ph-sub">[ Adjust preferences for accessibility ]</div>
+            </div>
+            <button class="btn" onclick="show('kanban-main', document.querySelectorAll('.nav-link')[0])">[ Back to Board ]</button>
+          </div>
+          <div class="cbox" style="max-width:480px;margin:auto;">
+            <div class="tog-row">
+              <div>[ ARIA Labels Enabled ]</div>
+              <div class="tog"></div>
+            </div>
+            <div class="tog-row">
+              <div>[ Keyboard Shortcuts Enabled ]</div>
+              <div class="tog"></div>
+            </div>
+            <div class="tog-row">
+              <div>[ High Contrast Mode ]</div>
+              <div class="tog"></div>
+            </div>
+            <div class="btn-grp" style="margin-top:16px;">
+              <button class="btn filled">[ Save Accessibility Settings ]</button>
+              <button class="btn" onclick="show('kanban-main', document.querySelectorAll('.nav-link')[0])">[ Cancel ]</button>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div style="font-size:11px;color:var(--w-label);">[ All settings provide real-time feedback ]</div>
+        </div>
+        <!-- Error State: Invalid Task Move -->
+        <div class="page" id="error-state">
+          <div class="ph">
+            <div>
+              <div class="ph-title">[ Error: Invalid Task Move ]</div>
+              <div class="ph-sub">[ Task cannot be moved to Done without required fields ]</div>
+            </div>
+            <button class="btn" onclick="show('kanban-main', document.querySelectorAll('.nav-link')[0])">[ Back to Board ]</button>
+          </div>
+          <div class="msg-bub" style="max-width:420px;margin:auto;">
+            <div style="font-size:13px;color:var(--w-active);">[ Error Message: Please complete all required fields before moving task to Done. ]</div>
+            <div style="margin-top:8px;font-size:11px;color:var(--w-label);">[ Accessible: Error announced for screen readers ]</div>
+            <div class="btn-grp" style="margin-top:16px;">
+              <button class="btn" onclick="show('task-popup', document.querySelectorAll('.nav-link')[1])">[ Edit Task ]</button>
+              <button class="btn" onclick="show('kanban-main', document.querySelectorAll('.nav-link')[0])">[ Back to Board ]</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<script>
-function show(id, el) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-  if (el) el.classList.add('active');
-}
-function switchTab(el, panelId) {
-  el.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('mob-todo').style.display='none';
-  document.getElementById('mob-progress').style.display='none';
-  document.getElementById('mob-done').style.display='none';
-  document.getElementById(panelId).style.display='block';
-}
-</script>
-<!--
-Summary Table
-Step → Screen Name → File Reference → Navigates To
-1.0 → Kanban Board - Desktop View → page-1-0 → page-1-1
-1.1 → Kanban Board - Tablet View → page-1-1 → page-1-2, page-1-0
-1.2 → Kanban Board - Mobile View → page-1-2 → page-1-1
-2.0 → Accessible Kanban Board → page-2-0 → page-er-1
-Er.1 → Accessibility Issue Detected → page-er-1 → page-2-0
-3.0 → Drag-and-Drop Mode → page-3-0 → page-pu-1
-Pu.1 → Move Confirmation → page-pu-1 → page-3-0
-4.0 → Keyboard Navigation Mode → page-4-0 → page-er-2
-Er.2 → Invalid Move → page-er-2 → page-4-0
-5.0 → Settings Panel → page-5-0 → page-pu-2
-Pu.2 → Save Changes Confirmation → page-pu-2 → page-5-0
-6.0 → Quick Edit Overlay → page-6-0 → (add column)
--->
+  <script>
+    function show(id, el) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+      if (el) el.classList.add('active');
+    }
+    function switchTab(el, panelId) {
+      el.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+      var prefix = panelId.substring(0, panelId.lastIndexOf('-'));
+      document.querySelectorAll('[id^="mob-"]').forEach(p => p.style.display='none');
+      var t = document.getElementById(panelId);
+      if (t) t.style.display = 'block';
+    }
+  </script>
+  <!--
+  Summary Table
+  | Step | Screen Name | File Reference | Navigates To |
+  |------|-------------|---------------|--------------|
+  | 1    | Kanban Board Main Screen | kanban-main | Task Card Detail, Mobile View, Accessibility Settings, Error State |
+  | 2    | Task Card Detail Pop-Up  | task-popup  | Kanban Board Main Screen, Error State |
+  | 3    | Responsive Mobile View   | mobile-view | Task Card Detail, Kanban Board Main Screen |
+  | 4    | Accessibility Settings   | access-settings | Kanban Board Main Screen |
+  | 5    | Error State: Invalid Task Move | error-state | Task Card Detail, Kanban Board Main Screen |
+  -->
 </body>
 </html>
