@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Kanban Board Wireframe</title>
+  <title>Kanban Board Wireframes</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -18,270 +18,435 @@
     }
     html, body { height: 100%; font-family: 'Courier New', Courier, monospace; background: var(--w-bg); color: var(--w-text); font-size: 12px; }
     #app { display: flex; height: 100vh; overflow: hidden; }
-    #sidebar { width: 210px; flex-shrink: 0; background: var(--w-surface); border-right: 2px solid var(--w-border); display: flex; flex-direction: column; overflow-y: auto; }
+    #sidebar { width: 220px; flex-shrink: 0; background: var(--w-surface); border-right: 2px solid var(--w-border); display: flex; flex-direction: column; overflow-y: auto; }
     #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-    #topbar { height: 48px; flex-shrink: 0; background: var(--w-surface); border-bottom: 2px solid var(--w-border); display: flex; align-items: center; padding: 0 18px; gap: 12px; justify-content: space-between; }
+    #topbar { height: 52px; flex-shrink: 0; background: var(--w-surface); border-bottom: 2px solid var(--w-border); display: flex; align-items: center; padding: 0 20px; gap: 12px; justify-content: space-between; }
     #content { flex: 1; overflow-y: auto; background: var(--w-bg); }
-    .sb-logo { padding: 14px 16px; border-bottom: 1px dashed var(--w-border); }
-    .sb-logo-box { background: var(--w-block); border: 1px solid var(--w-border); height: 24px; display: flex; align-items: center; padding: 0 8px; font-size: 11px; color: var(--w-text); }
-    .sb-section { padding: 10px 16px 4px; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--w-label); border-bottom: 1px dashed var(--w-dark); }
-    .nav-link { display: flex; align-items: center; gap: 6px; padding: 7px 16px; cursor: pointer; font-size: 11px; color: var(--w-label); border-left: 3px solid transparent; }
+    .sb-logo { padding: 16px 18px; border-bottom: 1px dashed var(--w-border); }
+    .sb-logo-box { background: var(--w-block); border: 1px solid var(--w-border); height: 28px; display: flex; align-items: center; padding: 0 10px; font-size: 11px; color: var(--w-text); }
+    .sb-section { padding: 12px 18px 4px; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--w-label); border-bottom: 1px dashed var(--w-dark); }
+    .nav-link { display: flex; align-items: center; gap: 8px; padding: 8px 18px; cursor: pointer; font-size: 11px; color: var(--w-label); border-left: 3px solid transparent; }
     .nav-link:hover { background: var(--w-block); color: var(--w-text); }
     .nav-link.active { border-left-color: var(--w-stroke); background: var(--w-block); color: var(--w-text); font-weight: bold; }
     .nav-icon { width: 10px; height: 10px; background: var(--w-dark); flex-shrink: 0; }
-    .sb-footer { margin-top: auto; padding: 10px 16px; border-top: 1px dashed var(--w-border); display: flex; flex-direction: column; gap: 5px; }
+    .sb-footer { margin-top: auto; padding: 12px 18px; border-top: 1px dashed var(--w-border); display: flex; flex-direction: column; gap: 5px; }
     .sb-fline { height: 8px; background: var(--w-block); border: 1px solid var(--w-border); }
-    .avatar-wf { width: 26px; height: 26px; border-radius: 50%; background: var(--w-dark); border: 1px solid var(--w-border); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--w-surface); }
-    .topbar-name { height: 12px; width: 70px; background: var(--w-block); border: 1px solid var(--w-border); }
-    .notif-wf { height: 24px; width: 70px; background: var(--w-block); border: 1px solid var(--w-border); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--w-label); }
-    .search-wf { flex: 1; max-width: 240px; height: 24px; background: var(--w-block); border: 1px dashed var(--w-border); display: flex; align-items: center; padding: 0 8px; font-size: 10px; color: var(--w-label); }
+    .search-wf { flex: 1; max-width: 320px; height: 30px; background: var(--w-block); border: 1px dashed var(--w-border); display: flex; align-items: center; padding: 0 10px; font-size: 10px; color: var(--w-label); }
     .topbar-right { display: flex; align-items: center; gap: 10px; }
-    .page { display: none; padding: 20px 22px; }
+    .notif-wf { height: 28px; width: 90px; background: var(--w-block); border: 1px solid var(--w-border); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--w-label); }
+    .avatar-wf { width: 28px; height: 28px; border-radius: 50%; background: var(--w-dark); border: 1px solid var(--w-border); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--w-surface); }
+    .topbar-name { height: 12px; width: 90px; background: var(--w-block); border: 1px solid var(--w-border); }
+    .page { display: none; padding: 24px 28px; }
     .page.active { display: block; }
-    .ph { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
-    .ph-title { height: 18px; width: 180px; background: var(--w-block); border: 1px solid var(--w-border); margin-bottom: 5px; }
-    .ph-sub { height: 10px; width: 220px; background: var(--w-surface); border: 1px dashed var(--w-border); }
-    .bc-wf { height: 8px; width: 140px; background: var(--w-surface); border: 1px dashed var(--w-border); margin-bottom: 8px; }
-    .kanban-board { display: flex; gap: 16px; margin-bottom: 20px; }
-    .kanban-col { flex: 1; background: var(--w-surface); border: 1px solid var(--w-border); padding: 10px; min-width: 180px; }
-    .kanban-col-header { height: 18px; background: var(--w-block); border: 1px solid var(--w-border); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--w-label); }
-    .kanban-card { background: var(--w-block); border: 1px solid var(--w-border); padding: 8px; margin-bottom: 8px; }
-    .kanban-card-title { height: 12px; width: 90px; background: var(--w-dark); border: 1px solid var(--w-border); margin-bottom: 4px; }
-    .kanban-card-meta { height: 10px; width: 60px; background: var(--w-surface); border: 1px dashed var(--w-border); margin-bottom: 4px; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; height: 28px; min-width: 70px; background: var(--w-block); border: 1.5px solid var(--w-stroke); cursor: pointer; font-size: 10px; color: var(--w-text); font-family: inherit; padding: 0 10px; white-space: nowrap; }
+    .ph { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .ph-title { height: 22px; width: 220px; background: var(--w-block); border: 1px solid var(--w-border); margin-bottom: 6px; }
+    .ph-sub { height: 10px; width: 300px; background: var(--w-surface); border: 1px dashed var(--w-border); }
+    .bc-wf { height: 8px; width: 180px; background: var(--w-surface); border: 1px dashed var(--w-border); margin-bottom: 10px; }
+    .g3 { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-bottom: 14px; }
+    .g2 { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; margin-bottom: 14px; }
+    @media (max-width: 860px) { .g3,.g2 { grid-template-columns: 1fr; } }
+    .card { background: var(--w-surface); border: 1px solid var(--w-border); padding: 14px 16px; margin-bottom: 14px; }
+    .card-title { height: 9px; width: 120px; background: var(--w-dark); border: 1px solid var(--w-border); margin-bottom: 12px; }
+    .stat { background: var(--w-surface); border: 1px solid var(--w-border); padding: 14px 16px; }
+    .s-label { height: 8px; width: 100px; background: var(--w-dark); border: 1px solid var(--w-border); margin-bottom: 10px; }
+    .s-val { height: 30px; width: 80px; background: var(--w-block); border: 1px solid var(--w-border); margin-bottom: 6px; }
+    .s-sub { height: 8px; width: 130px; background: var(--w-surface); border: 1px dashed var(--w-border); }
+    .ln { height: 10px; background: var(--w-block); border: 1px solid var(--w-border); margin-bottom: 6px; }
+    .lnsm { height: 8px; background: var(--w-surface); border: 1px dashed var(--w-border); margin-bottom: 5px; }
+    .w100 { width:100%; } .w80 { width:80%; } .w60 { width:60%; } .w40 { width:40%; } .w30 { width:30%; }
+    .wf-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed var(--w-border); }
+    .wf-row:last-child { border-bottom: none; }
+    .row-l { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; height: 30px; min-width: 80px; background: var(--w-block); border: 1.5px solid var(--w-stroke); cursor: pointer; font-size: 10px; color: var(--w-text); font-family: inherit; padding: 0 14px; white-space: nowrap; }
     .btn:hover { background: var(--w-dark); }
     .btn.filled { background: var(--w-active); color: var(--w-surface); border-color: var(--w-stroke); }
-    .btn.sm { height: 22px; min-width: 40px; font-size: 9px; padding: 0 6px; }
-    .popup { background: var(--w-block); border: 2px solid var(--w-border); padding: 18px 20px; max-width: 440px; margin: 0 auto; margin-bottom: 18px; }
-    .popup-header { height: 16px; width: 120px; background: var(--w-dark); border: 1px solid var(--w-border); margin-bottom: 6px; }
-    .popup-meta { height: 10px; width: 80px; background: var(--w-surface); border: 1px dashed var(--w-border); margin-bottom: 6px; }
-    .popup-desc { height: 24px; width: 100%; background: var(--w-surface); border: 1px dashed var(--w-border); margin-bottom: 6px; }
-    .popup-actions { display: flex; gap: 8px; margin-bottom: 8px; }
-    .popup-attach { height: 12px; width: 140px; background: var(--w-surface); border: 1px dashed var(--w-border); margin-bottom: 6px; }
-    .error-wrap { background: var(--w-block); border: 2px solid var(--w-border); padding: 18px 20px; max-width: 440px; margin: 0 auto; margin-bottom: 18px; text-align: center; }
-    .error-msg { height: 16px; width: 220px; background: var(--w-dark); border: 1px solid var(--w-border); margin: 0 auto 10px; }
-    .error-actions { display: flex; justify-content: center; gap: 8px; margin-bottom: 6px; }
-    .access-board { display: flex; gap: 16px; margin-bottom: 20px; }
-    .access-col { flex: 1; background: var(--w-surface); border: 1px solid var(--w-border); padding: 10px; min-width: 180px; }
-    .access-col-header { height: 18px; background: var(--w-block); border: 1px solid var(--w-border); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--w-label); }
-    .access-card { background: var(--w-block); border: 1px solid var(--w-border); padding: 8px; margin-bottom: 8px; }
-    .access-card-title { height: 12px; width: 90px; background: var(--w-dark); border: 1px solid var(--w-border); margin-bottom: 4px; }
-    .access-card-meta { height: 10px; width: 60px; background: var(--w-surface); border: 1px dashed var(--w-border); margin-bottom: 4px; }
-    .focus-ind { height: 8px; width: 100px; background: var(--w-dark); border: 1px solid var(--w-border); margin-bottom: 6px; }
-    .aria-label { height: 8px; width: 120px; background: var(--w-block); border: 1px dashed var(--w-border); margin-bottom: 6px; }
-    .help-popup { background: var(--w-block); border: 2px solid var(--w-border); padding: 18px 20px; max-width: 440px; margin: 0 auto; margin-bottom: 18px; }
-    .help-header { height: 16px; width: 120px; background: var(--w-dark); border: 1px solid var(--w-border); margin-bottom: 6px; }
-    .help-shortcut { height: 10px; width: 180px; background: var(--w-surface); border: 1px dashed var(--w-border); margin-bottom: 6px; }
-    .help-tip { height: 10px; width: 220px; background: var(--w-surface); border: 1px dashed var(--w-border); margin-bottom: 6px; }
-    .error-contact { height: 14px; width: 160px; background: var(--w-block); border: 1px dashed var(--w-border); margin-bottom: 6px; }
-    @media (max-width: 800px) {
-      .kanban-board, .access-board { flex-direction: column; }
-      .kanban-col, .access-col { min-width: 100%; }
-    }
+    .btn.sm { height: 24px; min-width: 50px; font-size: 9px; padding: 0 8px; }
+    .btn-grp { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag { display: inline-block; height: 16px; width: 55px; background: var(--w-block); border: 1px solid var(--w-border); vertical-align: middle; }
+    .tagw { width: 100px; }
+    .inp { width: 100%; height: 30px; background: var(--w-block); border: 1px dashed var(--w-border); margin-bottom: 4px; }
+    .txa { width: 100%; height: 70px; background: var(--w-block); border: 1px dashed var(--w-border); margin-bottom: 4px; }
+    .lbl { height: 8px; width: 80px; background: var(--w-dark); border: 1px solid var(--w-border); margin-bottom: 5px; }
+    .fgrp { margin-bottom: 12px; }
+    .tab-bar { display: flex; border-bottom: 2px solid var(--w-border); margin-bottom: 14px; gap: 2px; }
+    .tab { height: 32px; min-width: 90px; background: var(--w-surface); border: 1px solid var(--w-border); border-bottom: none; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 10px; color: var(--w-label); padding: 0 14px; }
+    .tab:hover { background: var(--w-block); }
+    .tab.active { background: var(--w-block); color: var(--w-text); font-weight: bold; border-bottom: 2px solid var(--w-surface); }
+    .steps { display: flex; margin-bottom: 20px; }
+    .step { flex: 1; height: 32px; background: var(--w-surface); border: 1px solid var(--w-border); border-right: none; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--w-label); }
+    .step:last-child { border-right: 1px solid var(--w-border); }
+    .step.active { background: var(--w-active); color: var(--w-surface); font-weight: bold; }
+    .step.done { background: var(--w-block); color: var(--w-text); font-weight: bold; }
+    .slot-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .slot { height: 28px; width: 72px; background: var(--w-block); border: 1px solid var(--w-border); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--w-text); cursor: pointer; }
+    .slot:hover { background: var(--w-dark); }
+    .slot.selected { background: var(--w-active); color: var(--w-surface); border-color: var(--w-stroke); }
+    .slot.full { background: var(--w-surface); color: var(--w-label); cursor: not-allowed; text-decoration: line-through; }
+    .sel-grp { display: flex; flex-direction: column; gap: 5px; }
+    .sel-opt { height: 30px; background: var(--w-block); border: 1px solid var(--w-border); display: flex; align-items: center; padding: 0 10px; font-size: 10px; cursor: pointer; gap: 8px; }
+    .sel-opt:hover { background: var(--w-dark); }
+    .sel-opt.active { border: 1.5px solid var(--w-stroke); background: var(--w-dark); font-weight: bold; }
+    .sel-dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--w-stroke); flex-shrink: 0; background: var(--w-surface); }
+    .sel-opt.active .sel-dot { background: var(--w-stroke); }
+    .radio-grp { display: flex; gap: 6px; flex-wrap: wrap; }
+    .radio-opt { height: 28px; padding: 0 14px; background: var(--w-block); border: 1px solid var(--w-border); display: flex; align-items: center; font-size: 10px; cursor: pointer; }
+    .radio-opt:hover { background: var(--w-dark); }
+    .radio-opt.active { border: 1.5px solid var(--w-stroke); font-weight: bold; background: var(--w-dark); }
+    .li { display: flex; justify-content: space-between; align-items: flex-start; padding: 12px 14px; border: 1px solid var(--w-border); background: var(--w-surface); margin-bottom: 8px; gap: 12px; }
+    .li-acts { display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+    .tog-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px dashed var(--w-border); }
+    .tog-row:last-child { border-bottom: none; }
+    .tog { width: 34px; height: 18px; border: 1.5px solid var(--w-border); background: var(--w-block); display: flex; align-items: center; padding: 0 2px; cursor: pointer; flex-shrink: 0; }
+    .tog::after { content:''; width:12px; height:12px; background:var(--w-dark); border:1px solid var(--w-border); transition:margin .15s; }
+    .tog.on { background: var(--w-dark); }
+    .tog.on::after { margin-left: 14px; background: var(--w-surface); }
+    .msg-bub { background: var(--w-block); border: 1px solid var(--w-border); padding: 12px 14px; margin-bottom: 12px; }
+    .msg-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px dashed var(--w-border); cursor: pointer; }
+    .msg-row:hover { background: var(--w-block); }
+    .msg-row:last-child { border-bottom: none; }
+    .ok-wrap { text-align: center; padding: 36px 24px; max-width: 440px; margin: 0 auto; }
+    .ok-ring { width: 52px; height: 52px; border: 2px solid var(--w-stroke); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 22px; color: var(--w-stroke); }
+    .cbox { background: var(--w-bg); border: 1px dashed var(--w-border); padding: 14px 16px; margin-bottom: 12px; }
+    .divider { border: none; border-top: 1px dashed var(--w-border); margin: 12px 0; }
   </style>
 </head>
 <body>
 <div id="app">
   <div id="sidebar">
     <div class="sb-logo">
-      <div class="sb-logo-box">[ LOGO — KanbanApp ]</div>
+      <div class="sb-logo-box">[ LOGO — Kanban Demo ]</div>
     </div>
-    <div class="sb-section">Workflow Steps</div>
-    <div>
-      <div class="nav-link active" onclick="show('pg-1-0',this)">1.0 Kanban Board Overview</div>
-      <div class="nav-link" onclick="show('pg-1-1',this)">1.1 Card Details Pop-Up</div>
-      <div class="nav-link" onclick="show('pg-er-1',this)">Er.1 Board Load Failure</div>
-      <div class="nav-link" onclick="show('pg-2-0',this)">2.0 Accessible Kanban Board</div>
-      <div class="nav-link" onclick="show('pg-2-1',this)">2.1 Keyboard Nav Help Pop-Up</div>
-      <div class="nav-link" onclick="show('pg-er-2',this)">Er.2 Accessibility Feature Failure</div>
-    </div>
+    <div class="sb-section">Board Views</div>
+    <div class="nav-link active" onclick="show('page-1-0', this)">1.0 Desktop View</div>
+    <div class="nav-link" onclick="show('page-1-1', this)">1.1 Tablet View</div>
+    <div class="nav-link" onclick="show('page-1-2', this)">1.2 Mobile View</div>
+    <div class="nav-link" onclick="show('page-2-0', this)">2.0 Accessibility Board</div>
+    <div class="nav-link" onclick="show('page-er-1', this)">Er.1 Accessibility Issue</div>
+    <div class="sb-section">Interactions</div>
+    <div class="nav-link" onclick="show('page-3-0', this)">3.0 Drag & Drop Mode</div>
+    <div class="nav-link" onclick="show('page-pu-1', this)">Pu.1 Move Confirmation</div>
+    <div class="nav-link" onclick="show('page-4-0', this)">4.0 Keyboard Navigation</div>
+    <div class="nav-link" onclick="show('page-er-2', this)">Er.2 Invalid Move</div>
+    <div class="sb-section">Customization</div>
+    <div class="nav-link" onclick="show('page-5-0', this)">5.0 Settings Panel</div>
+    <div class="nav-link" onclick="show('page-pu-2', this)">Pu.2 Save Confirmation</div>
+    <div class="nav-link" onclick="show('page-6-0', this)">6.0 Quick Edit Overlay</div>
     <div class="sb-footer">
       <div class="sb-fline"></div>
-      <div>[ KanbanApp v0.1 ]</div>
-      <div>[ Accessibility Compliant ]</div>
-      <div>© 2024 KanbanApp Inc.</div>
+      <div class="sb-logo-box">Kanban v1.0</div>
+      <div style="font-size:10px;color:var(--w-label);">© 2024 Kanban Demo</div>
     </div>
   </div>
   <div id="main">
     <div id="topbar">
-      <div class="search-wf">[ Search box __________________ ]</div>
+      <div class="search-wf">[ Search box ________________________ ]</div>
       <div class="topbar-right">
-        <div class="notif-wf">[ Bell / Notif ]</div>
-        <div class="avatar-wf">PM</div>
+        <div class="notif-wf">[ Notifications ]</div>
+        <div class="avatar-wf">JD</div>
         <div class="topbar-name">[ Profile ]</div>
       </div>
     </div>
     <div id="content">
-      <!-- 1.0 Kanban Board Overview -->
-      <div class="page active" id="pg-1-0">
+      <!-- Kanban Board - Desktop View -->
+      <div class="page active" id="page-1-0">
         <div class="ph">
           <div>
-            <div class="ph-title">[ Kanban Board Overview ]</div>
-            <div class="ph-sub">[ View all tasks across columns ]</div>
+            <div class="ph-title">[ Kanban Board — Desktop ]</div>
+            <div class="ph-sub">[ Project: Demo Board ]</div>
           </div>
-          <div class="bc-wf">[ Breadcrumbs ]</div>
+          <div class="bc-wf">[ Summary Bar: 12 Tasks ]</div>
         </div>
-        <div class="kanban-board">
-          <div class="kanban-col">
-            <div class="kanban-col-header">[ To Do ]</div>
-            <div class="kanban-card" onclick="show('pg-1-1')">
-              <div class="kanban-card-title">[ Task Title ]</div>
-              <div class="kanban-card-meta">[ Assignee ]</div>
-              <div class="kanban-card-meta">[ Status: To Do ]</div>
-            </div>
-            <div class="kanban-card">
-              <div class="kanban-card-title">[ Task Title ]</div>
-              <div class="kanban-card-meta">[ Assignee ]</div>
-              <div class="kanban-card-meta">[ Status: To Do ]</div>
-            </div>
+        <div class="g3">
+          <div class="card" aria-label="To Do Column">
+            <div class="card-title">[ To Do ]</div>
+            <div class="ln w100">[ Task Card ]</div>
+            <div class="ln w100">[ Task Card ]</div>
+            <div class="ln w100">[ Task Card ]</div>
           </div>
-          <div class="kanban-col">
-            <div class="kanban-col-header">[ In Progress ]</div>
-            <div class="kanban-card" onclick="show('pg-1-1')">
-              <div class="kanban-card-title">[ Task Title ]</div>
-              <div class="kanban-card-meta">[ Assignee ]</div>
-              <div class="kanban-card-meta">[ Status: In Progress ]</div>
-            </div>
-            <div class="kanban-card">
-              <div class="kanban-card-title">[ Task Title ]</div>
-              <div class="kanban-card-meta">[ Assignee ]</div>
-              <div class="kanban-card-meta">[ Status: In Progress ]</div>
-            </div>
+          <div class="card" aria-label="In Progress Column">
+            <div class="card-title">[ In Progress ]</div>
+            <div class="ln w100">[ Task Card ]</div>
+            <div class="ln w100">[ Task Card ]</div>
           </div>
-          <div class="kanban-col">
-            <div class="kanban-col-header">[ Done ]</div>
-            <div class="kanban-card" onclick="show('pg-1-1')">
-              <div class="kanban-card-title">[ Task Title ]</div>
-              <div class="kanban-card-meta">[ Assignee ]</div>
-              <div class="kanban-card-meta">[ Status: Done ]</div>
-            </div>
-            <div class="kanban-card">
-              <div class="kanban-card-title">[ Task Title ]</div>
-              <div class="kanban-card-meta">[ Assignee ]</div>
-              <div class="kanban-card-meta">[ Status: Done ]</div>
-            </div>
+          <div class="card" aria-label="Done Column">
+            <div class="card-title">[ Done ]</div>
+            <div class="ln w100">[ Task Card ]</div>
+            <div class="ln w100">[ Task Card ]</div>
           </div>
         </div>
-        <div class="btn" onclick="show('pg-1-1')">[ View Card Details → ]</div>
-        <div class="btn" onclick="show('pg-er-1')">[ Simulate Board Load Failure ]</div>
+        <div class="btn-grp">
+          <button class="btn" onclick="show('page-1-1')">Next: Tablet View →</button>
+        </div>
       </div>
-      <!-- 1.1 Card Details Pop-Up -->
-      <div class="page" id="pg-1-1">
+      <!-- Kanban Board - Tablet View -->
+      <div class="page" id="page-1-1">
         <div class="ph">
           <div>
-            <div class="ph-title">[ Card Details Pop-Up ]</div>
-            <div class="ph-sub">[ In-depth task details ]</div>
+            <div class="ph-title">[ Kanban Board — Tablet ]</div>
+            <div class="ph-sub">[ Project: Demo Board ]</div>
           </div>
-          <div class="bc-wf">[ Breadcrumbs ]</div>
         </div>
-        <div class="popup">
-          <div class="popup-header">[ Task Title ]</div>
-          <div class="popup-meta">[ Assignee ]</div>
-          <div class="popup-meta">[ Due Date ]</div>
-          <div class="popup-desc">[ Task Description ]</div>
-          <div class="popup-attach">[ Attachments ]</div>
-          <div class="popup-actions">
-            <div class="btn sm">[ Mark as Done ]</div>
-            <div class="btn sm">[ Assign ]</div>
+        <div class="g3">
+          <div class="card" aria-label="To Do Column">
+            <div class="card-title">[ To Do ]</div>
+            <div class="ln w100">[ Task Card ]</div>
+            <div class="ln w100">[ Task Card ]</div>
           </div>
-          <div class="btn" onclick="show('pg-1-0')">[ ← Back to Board ]</div>
-          <div class="btn" onclick="show('pg-er-1')">[ Simulate Board Load Failure ]</div>
+          <div class="card" aria-label="In Progress Column">
+            <div class="card-title">[ In Progress ]</div>
+            <div class="ln w100">[ Task Card ]</div>
+          </div>
+          <div class="card" aria-label="Done Column">
+            <div class="card-title">[ Done ]</div>
+            <div class="ln w100">[ Task Card ]</div>
+          </div>
+        </div>
+        <div class="btn-grp">
+          <button class="btn" onclick="show('page-1-2')">Next: Mobile View →</button>
+          <button class="btn" onclick="show('page-1-0')">← Back: Desktop</button>
         </div>
       </div>
-      <!-- Er.1 Board Load Failure -->
-      <div class="page" id="pg-er-1">
+      <!-- Kanban Board - Mobile View -->
+      <div class="page" id="page-1-2">
         <div class="ph">
           <div>
-            <div class="ph-title">[ Board Load Failure ]</div>
-            <div class="ph-sub">[ Error loading Kanban board ]</div>
+            <div class="ph-title">[ Kanban Board — Mobile ]</div>
+            <div class="ph-sub">[ Project: Demo Board ]</div>
           </div>
         </div>
-        <div class="error-wrap">
-          <div class="error-msg">[ Error: Unable to load board ]</div>
-          <div class="error-actions">
-            <div class="btn filled" onclick="show('pg-1-0')">[ Retry ]</div>
+        <div class="tab-bar">
+          <div class="tab active" onclick="switchTab(this, 'mob-todo')">To Do</div>
+          <div class="tab" onclick="switchTab(this, 'mob-progress')">In Progress</div>
+          <div class="tab" onclick="switchTab(this, 'mob-done')">Done</div>
+        </div>
+        <div id="mob-todo" style="display:block;">
+          <div class="card" aria-label="To Do Column">
+            <div class="card-title">[ To Do ]</div>
+            <div class="ln w100">[ Task Card ]</div>
+            <div class="ln w100">[ Task Card ]</div>
           </div>
-          <div class="btn" onclick="show('pg-1-0')">[ Back to Board Overview ]</div>
+        </div>
+        <div id="mob-progress" style="display:none;">
+          <div class="card" aria-label="In Progress Column">
+            <div class="card-title">[ In Progress ]</div>
+            <div class="ln w100">[ Task Card ]</div>
+          </div>
+        </div>
+        <div id="mob-done" style="display:none;">
+          <div class="card" aria-label="Done Column">
+            <div class="card-title">[ Done ]</div>
+            <div class="ln w100">[ Task Card ]</div>
+          </div>
+        </div>
+        <div class="btn-grp">
+          <button class="btn" onclick="show('page-1-1')">← Back: Tablet</button>
         </div>
       </div>
-      <!-- 2.0 Accessible Kanban Board -->
-      <div class="page" id="pg-2-0">
+      <!-- Accessible Kanban Board -->
+      <div class="page" id="page-2-0">
         <div class="ph">
           <div>
             <div class="ph-title">[ Accessible Kanban Board ]</div>
-            <div class="ph-sub">[ ARIA labels, keyboard navigation ]</div>
-          </div>
-          <div class="bc-wf">[ Breadcrumbs ]</div>
-        </div>
-        <div class="access-board">
-          <div class="access-col" tabindex="0" aria-label="To Do Column">
-            <div class="access-col-header">[ To Do ]</div>
-            <div class="access-card" tabindex="0" aria-label="Task Card">
-              <div class="access-card-title">[ Task Title ]</div>
-              <div class="access-card-meta">[ Assignee ]</div>
-              <div class="access-card-meta">[ Status: To Do ]</div>
-              <div class="focus-ind">[ Focus State ]</div>
-              <div class="aria-label">[ ARIA: To Do Card ]</div>
-            </div>
-          </div>
-          <div class="access-col" tabindex="0" aria-label="In Progress Column">
-            <div class="access-col-header">[ In Progress ]</div>
-            <div class="access-card" tabindex="0" aria-label="Task Card">
-              <div class="access-card-title">[ Task Title ]</div>
-              <div class="access-card-meta">[ Assignee ]</div>
-              <div class="access-card-meta">[ Status: In Progress ]</div>
-              <div class="focus-ind">[ Focus State ]</div>
-              <div class="aria-label">[ ARIA: In Progress Card ]</div>
-            </div>
-          </div>
-          <div class="access-col" tabindex="0" aria-label="Done Column">
-            <div class="access-col-header">[ Done ]</div>
-            <div class="access-card" tabindex="0" aria-label="Task Card">
-              <div class="access-card-title">[ Task Title ]</div>
-              <div class="access-card-meta">[ Assignee ]</div>
-              <div class="access-card-meta">[ Status: Done ]</div>
-              <div class="focus-ind">[ Focus State ]</div>
-              <div class="aria-label">[ ARIA: Done Card ]</div>
-            </div>
+            <div class="ph-sub">[ High Contrast, ARIA, Keyboard Shortcuts ]</div>
           </div>
         </div>
-        <div class="btn" onclick="show('pg-2-1')">[ Keyboard Navigation Help → ]</div>
-        <div class="btn" onclick="show('pg-er-2')">[ Simulate Accessibility Feature Failure ]</div>
-      </div>
-      <!-- 2.1 Keyboard Navigation Help Pop-Up -->
-      <div class="page" id="pg-2-1">
-        <div class="ph">
-          <div>
-            <div class="ph-title">[ Keyboard Navigation Help Pop-Up ]</div>
-            <div class="ph-sub">[ Accessibility shortcuts & tips ]</div>
+        <div class="g3">
+          <div class="card" aria-label="To Do Column" tabindex="0">
+            <div class="card-title" style="font-size:16px;font-weight:bold;">[ To Do ]</div>
+            <div class="ln w100" style="border:2px solid var(--w-stroke);">[ Task Card ]</div>
           </div>
-          <div class="bc-wf">[ Breadcrumbs ]</div>
+          <div class="card" aria-label="In Progress Column" tabindex="0">
+            <div class="card-title" style="font-size:16px;font-weight:bold;">[ In Progress ]</div>
+            <div class="ln w100" style="border:2px solid var(--w-stroke);">[ Task Card ]</div>
+          </div>
+          <div class="card" aria-label="Done Column" tabindex="0">
+            <div class="card-title" style="font-size:16px;font-weight:bold;">[ Done ]</div>
+            <div class="ln w100" style="border:2px solid var(--w-stroke);">[ Task Card ]</div>
+          </div>
         </div>
-        <div class="help-popup">
-          <div class="help-header">[ Keyboard Shortcuts ]</div>
-          <div class="help-shortcut">[ Tab: Move focus ]</div>
-          <div class="help-shortcut">[ Arrow keys: Navigate columns/cards ]</div>
-          <div class="help-tip">[ Screen reader announces column headers & card info ]</div>
-          <div class="help-tip">[ Tips: Use Enter to open card details ]</div>
-          <div class="btn" onclick="show('pg-2-0')">[ ← Back to Accessible Board ]</div>
-          <div class="btn" onclick="show('pg-er-2')">[ Simulate Accessibility Feature Failure ]</div>
+        <div class="msg-bub">[ Screen reader instructions: Use Tab/Arrow keys to navigate columns and cards. ]</div>
+        <div class="btn-grp">
+          <button class="btn" onclick="show('page-er-1')">Accessibility Issue →</button>
         </div>
       </div>
-      <!-- Er.2 Accessibility Feature Failure -->
-      <div class="page" id="pg-er-2">
+      <!-- Accessibility Issue Detected -->
+      <div class="page" id="page-er-1">
         <div class="ph">
           <div>
-            <div class="ph-title">[ Accessibility Feature Failure ]</div>
-            <div class="ph-sub">[ Error with accessibility features ]</div>
+            <div class="ph-title">[ Accessibility Issue Detected ]</div>
+            <div class="ph-sub">[ Missing ARIA label or focus trap ]</div>
           </div>
         </div>
-        <div class="error-wrap">
-          <div class="error-msg">[ Error: Accessibility features unavailable ]</div>
-          <div class="error-contact">[ Contact Support ]</div>
-          <div class="error-actions">
-            <div class="btn filled" onclick="show('pg-2-0')">[ Retry ]</div>
+        <div class="msg-bub">[ Alert: Accessibility issue detected. Please review ARIA labels and focus states. ]</div>
+        <div class="btn-grp">
+          <button class="btn" onclick="show('page-2-0')">← Back: Accessibility Board</button>
+        </div>
+      </div>
+      <!-- Drag-and-Drop Mode -->
+      <div class="page" id="page-3-0">
+        <div class="ph">
+          <div>
+            <div class="ph-title">[ Kanban Board — Drag & Drop ]</div>
+            <div class="ph-sub">[ Move tasks by dragging cards ]</div>
           </div>
-          <div class="btn" onclick="show('pg-2-0')">[ Back to Accessible Board ]</div>
+        </div>
+        <div class="g3">
+          <div class="card" aria-label="To Do Column">
+            <div class="card-title">[ To Do ]</div>
+            <div class="ln w100" style="border:2px dashed var(--w-stroke);">[ Draggable Task Card ]</div>
+          </div>
+          <div class="card" aria-label="In Progress Column">
+            <div class="card-title">[ In Progress ]</div>
+            <div class="ln w100" style="border:2px dashed var(--w-stroke);">[ Draggable Task Card ]</div>
+          </div>
+          <div class="card" aria-label="Done Column">
+            <div class="card-title">[ Done ]</div>
+            <div class="ln w100" style="border:2px dashed var(--w-stroke);">[ Draggable Task Card ]</div>
+          </div>
+        </div>
+        <div class="msg-bub">[ ARIA live region: Task moved to 'In Progress' ]</div>
+        <div class="btn-grp">
+          <button class="btn" onclick="show('page-pu-1')">Move Confirmation →</button>
+        </div>
+      </div>
+      <!-- Move Confirmation Pop-Up -->
+      <div class="page" id="page-pu-1">
+        <div class="ph">
+          <div>
+            <div class="ph-title">[ Move Confirmation ]</div>
+            <div class="ph-sub">[ Confirm move of critical task ]</div>
+          </div>
+        </div>
+        <div class="cbox">[ Are you sure you want to move this task? ]</div>
+        <div class="btn-grp">
+          <button class="btn filled" onclick="show('page-3-0')">Confirm Move</button>
+          <button class="btn" onclick="show('page-3-0')">Cancel</button>
+        </div>
+      </div>
+      <!-- Keyboard Navigation Mode -->
+      <div class="page" id="page-4-0">
+        <div class="ph">
+          <div>
+            <div class="ph-title">[ Kanban Board — Keyboard Navigation ]</div>
+            <div class="ph-sub">[ Move tasks using keyboard only ]</div>
+          </div>
+        </div>
+        <div class="g3">
+          <div class="card" aria-label="To Do Column" tabindex="0">
+            <div class="card-title">[ To Do ]</div>
+            <div class="ln w100" style="outline:2px solid var(--w-active);">[ Focused Task Card ]</div>
+          </div>
+          <div class="card" aria-label="In Progress Column" tabindex="0">
+            <div class="card-title">[ In Progress ]</div>
+            <div class="ln w100">[ Task Card ]</div>
+          </div>
+          <div class="card" aria-label="Done Column" tabindex="0">
+            <div class="card-title">[ Done ]</div>
+            <div class="ln w100">[ Task Card ]</div>
+          </div>
+        </div>
+        <div class="msg-bub">[ Use Tab/Arrow/Enter/Space keys to move tasks. ]</div>
+        <div class="btn-grp">
+          <button class="btn" onclick="show('page-er-2')">Invalid Move →</button>
+        </div>
+      </div>
+      <!-- Invalid Move Error State -->
+      <div class="page" id="page-er-2">
+        <div class="ph">
+          <div>
+            <div class="ph-title">[ Invalid Move ]</div>
+            <div class="ph-sub">[ Move not allowed ]</div>
+          </div>
+        </div>
+        <div class="msg-bub">[ Error: You cannot move this task to 'Done'. Board rules prevent this action. ]</div>
+        <div class="btn-grp">
+          <button class="btn" onclick="show('page-4-0')">← Back: Keyboard Navigation</button>
+        </div>
+      </div>
+      <!-- Settings Panel -->
+      <div class="page" id="page-5-0">
+        <div class="ph">
+          <div>
+            <div class="ph-title">[ Settings Panel ]</div>
+            <div class="ph-sub">[ Customize columns and layout ]</div>
+          </div>
+        </div>
+        <div class="cbox">
+          <div class="fgrp">
+            <label class="lbl">[ Reorder Columns ]</label>
+            <div class="sel-grp">
+              <div class="sel-opt">[ To Do ]</div>
+              <div class="sel-opt">[ In Progress ]</div>
+              <div class="sel-opt">[ Done ]</div>
+            </div>
+          </div>
+          <div class="fgrp">
+            <label class="lbl">[ Add Column ]</label>
+            <input class="inp" placeholder="[ New Column Name ]" />
+            <button class="btn sm">Add</button>
+          </div>
+          <div class="fgrp">
+            <label class="lbl">[ Remove Column ]</label>
+            <select class="inp">
+              <option>[ To Do ]</option>
+              <option>[ In Progress ]</option>
+              <option>[ Done ]</option>
+            </select>
+            <button class="btn sm">Remove</button>
+          </div>
+        </div>
+        <div class="btn-grp">
+          <button class="btn filled" onclick="show('page-pu-2')">Save Changes</button>
+        </div>
+      </div>
+      <!-- Save Changes Confirmation Pop-Up -->
+      <div class="page" id="page-pu-2">
+        <div class="ph">
+          <div>
+            <div class="ph-title">[ Save Changes Confirmation ]</div>
+            <div class="ph-sub">[ Confirm and save layout changes ]</div>
+          </div>
+        </div>
+        <div class="cbox">[ Summary of changes: Columns reordered, 'Review' added, 'Done' removed. ]</div>
+        <div class="btn-grp">
+          <button class="btn filled">Confirm Save</button>
+          <button class="btn">Undo</button>
+          <button class="btn" onclick="show('page-5-0')">← Back: Settings Panel</button>
+        </div>
+      </div>
+      <!-- Quick Edit Overlay -->
+      <div class="page" id="page-6-0">
+        <div class="ph">
+          <div>
+            <div class="ph-title">[ Quick Edit Overlay ]</div>
+            <div class="ph-sub">[ Inline column edits ]</div>
+          </div>
+        </div>
+        <div class="g3">
+          <div class="card">
+            <div class="wf-row">
+              <input class="inp w80" value="To Do" />
+              <button class="btn sm">Edit</button>
+              <button class="btn sm">Remove</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="wf-row">
+              <input class="inp w80" value="In Progress" />
+              <button class="btn sm">Edit</button>
+              <button class="btn sm">Remove</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="wf-row">
+              <input class="inp w80" value="Done" />
+              <button class="btn sm">Edit</button>
+              <button class="btn sm">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="btn-grp">
+          <button class="btn">Add Column</button>
         </div>
       </div>
     </div>
@@ -294,17 +459,30 @@ function show(id, el) {
   document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
   if (el) el.classList.add('active');
 }
+function switchTab(el, panelId) {
+  el.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('mob-todo').style.display='none';
+  document.getElementById('mob-progress').style.display='none';
+  document.getElementById('mob-done').style.display='none';
+  document.getElementById(panelId).style.display='block';
+}
 </script>
 <!--
-Summary Table:
-| Step | Screen Name | File Reference | Navigates To |
-|------|-------------|---------------|-------------|
-| 1.0  | Kanban Board Overview | pg-1-0 | 1.1, Er.1 |
-| 1.1  | Card Details Pop-Up   | pg-1-1 | 1.0, Er.1 |
-| Er.1 | Board Load Failure    | pg-er-1 | 1.0 |
-| 2.0  | Accessible Kanban Board | pg-2-0 | 2.1, Er.2 |
-| 2.1  | Keyboard Navigation Help Pop-Up | pg-2-1 | 2.0, Er.2 |
-| Er.2 | Accessibility Feature Failure   | pg-er-2 | 2.0 |
+Summary Table
+Step → Screen Name → File Reference → Navigates To
+1.0 → Kanban Board - Desktop View → page-1-0 → page-1-1
+1.1 → Kanban Board - Tablet View → page-1-1 → page-1-2, page-1-0
+1.2 → Kanban Board - Mobile View → page-1-2 → page-1-1
+2.0 → Accessible Kanban Board → page-2-0 → page-er-1
+Er.1 → Accessibility Issue Detected → page-er-1 → page-2-0
+3.0 → Drag-and-Drop Mode → page-3-0 → page-pu-1
+Pu.1 → Move Confirmation → page-pu-1 → page-3-0
+4.0 → Keyboard Navigation Mode → page-4-0 → page-er-2
+Er.2 → Invalid Move → page-er-2 → page-4-0
+5.0 → Settings Panel → page-5-0 → page-pu-2
+Pu.2 → Save Changes Confirmation → page-pu-2 → page-5-0
+6.0 → Quick Edit Overlay → page-6-0 → (add column)
 -->
 </body>
 </html>
