@@ -1,301 +1,175 @@
 # UX Workflow Documentation: Three-Column Kanban Board
 
-## Story Context
-**Jira Story:** DEMO-1071  
-**Title:** Design three-column Kanban board layout and responsive behavior
+## Experience Mindset
 
-**Business Goal:**
-Create comprehensive design specifications for a three-column Kanban board layout, including column spacing, header styling, card dimensions, and responsive breakpoints. Define color scheme, typography, visual separators, accessibility requirements (ARIA labels, focus states, keyboard navigation), and design tokens for spacing, colors, and typography.
+The Kanban board serves users (e.g., project managers, team members) who need to visualize, manage, and track tasks across distinct phases ('To Do', 'In Progress', 'Done'). The experience encompasses scenarios such as task creation, movement, review, and accessibility for all users.
 
-**Acceptance Criteria:**
-- Design specs document with exact measurements for column widths and spacing
-- Responsive breakpoints for mobile (320px-767px), tablet (768px-1023px), and desktop (1024px+)
-- Documented color palette and typography
-- Accessibility requirements (ARIA, focus states)
+---
+
+## User Scenarios & Minimum Viable Experience
+
+### Scenario 1: Creating and Managing Tasks on Kanban Board
+
+#### Scenario 1A: Standard Workflow
+- **Context:** Alex, a project manager, wants to add new tasks, view them in the 'To Do' column, and move them across columns as progress is made.
+- **Action:** Alex creates a task, assigns it, and updates its status by dragging it between columns.
+- **Actor:** Project manager
+- **Goal:** Efficiently visualize and update task status across project stages.
+
+#### Scenario 1B: Accessible Workflow (Keyboard Navigation)
+- **Context:** Jamie, a team member with limited mobility, needs to manage tasks using keyboard navigation and screen reader support.
+- **Action:** Jamie creates, selects, and moves tasks using keyboard shortcuts and receives ARIA label announcements.
+- **Actor:** Team member (accessibility needs)
+- **Goal:** Manage tasks without mouse, ensuring accessibility compliance.
+
+---
+
+### Scenario 2: Responsive Use Across Devices
+
+#### Scenario 2A: Mobile Workflow
+- **Context:** Sam, a developer, checks project status and updates tasks on a mobile device during commute.
+- **Action:** Sam views the Kanban board in a stacked layout, adds tasks, and moves them between columns using touch gestures.
+- **Actor:** Developer (mobile user)
+- **Goal:** Quickly view and update tasks on-the-go.
+
+#### Scenario 2B: Tablet/Desktop Workflow
+- **Context:** Maria, a QA lead, reviews tasks and moves them between columns on her desktop and tablet.
+- **Action:** Maria interacts with the board using drag-and-drop or keyboard navigation, with columns displayed horizontally.
+- **Actor:** QA lead
+- **Goal:** Efficient task management with optimal screen real estate.
+
+---
+
+## User & Business Goals
+
+- **User Goal:** Enable users to create, view, and manage tasks efficiently, with accessible and responsive design for all devices and abilities.
+- **Business Goal:** Improve team productivity, ensure inclusivity, and provide scalable design assets compatible with Angular applications.
+
+---
+
+## Workflow Design Variations (for each scenario)
+
+### Scenario 1: Creating and Managing Tasks
+
+#### Variation 1: Drag-and-Drop Workflow
+1.0 Kanban Board Homepage
+  - **Goal:** Provide overview of all tasks and columns.
+  - **Description:** User sees three columns ('To Do', 'In Progress', 'Done') horizontally. Each column header is visually distinct and accessible.
+  - **Design Problems:** HMW help users quickly identify task status? HMW ensure visual separation is clear?
+  - **Design Opportunities:** What if column headers are color-coded and have ARIA labels?
+
+2.0 Task Creation Modal (Pu.1)
+  - **Goal:** Allow user to create a new task.
+  - **Description:** Modal pops up with fields for task name, description, assignee, and initial column selection.
+  - **Design Problems:** HMW minimize friction in task creation? HMW ensure modal is accessible?
+  - **Design Opportunities:** What if modal supports keyboard shortcuts and focus management?
+
+3.0 Task Card in 'To Do' Column
+  - **Goal:** Display newly created task.
+  - **Description:** Task card appears in 'To Do' column; user can drag card to other columns.
+  - **Design Problems:** HMW make drag-and-drop intuitive? HMW provide feedback for movement?
+  - **Design Opportunities:** What if card changes color or animates on move?
+
+4.0 Task Card in 'In Progress'/'Done' Columns
+  - **Goal:** Update task status visually and functionally.
+  - **Description:** Task card moves to respective column; status updates.
+  - **Design Problems:** HMW ensure status is clear for all users?
+  - **Design Opportunities:** What if status change triggers notification or ARIA update?
+
+#### Variation 2: Keyboard Navigation Workflow
+1.0 Kanban Board Homepage
+  - **Goal:** Provide accessible overview of tasks and columns.
+  - **Description:** Columns are navigable via keyboard; focus states are visually distinct.
+  - **Design Problems:** HMW ensure focus is obvious? HMW support ARIA labeling?
+  - **Design Opportunities:** What if each column header is announced by screen reader?
+
+2.0 Task Creation via Keyboard Shortcut (Pu.1)
+  - **Goal:** Enable task creation without mouse.
+  - **Description:** User presses shortcut to open modal, fills fields, and submits.
+  - **Design Problems:** HMW design shortcut system? HMW ensure modal is accessible?
+  - **Design Opportunities:** What if modal auto-focuses first input?
+
+3.0 Task Movement via Keyboard
+  - **Goal:** Move tasks between columns using keyboard.
+  - **Description:** User selects task, uses arrow keys to shift column.
+  - **Design Problems:** HMW provide feedback for movement? HMW update ARIA status?
+  - **Design Opportunities:** What if movement triggers audible feedback?
+
+---
+
+### Scenario 2: Responsive Use Across Devices
+
+#### Variation 1: Mobile Workflow
+1.0 Kanban Board Mobile View
+  - **Goal:** Adapt layout for small screens.
+  - **Description:** Columns stack vertically; cards are swipeable.
+  - **Design Problems:** HMW maintain clarity in stacked layout? HMW support touch gestures?
+  - **Design Opportunities:** What if swipe gestures move tasks?
+
+2.0 Task Creation Mobile Modal (Pu.1)
+  - **Goal:** Create tasks on mobile.
+  - **Description:** Modal is full-screen, large touch targets.
+  - **Design Problems:** HMW ensure modal is easy to use? HMW support accessibility?
+  - **Design Opportunities:** What if modal supports voice input?
+
+#### Variation 2: Tablet/Desktop Workflow
+1.0 Kanban Board Desktop View
+  - **Goal:** Maximize horizontal space.
+  - **Description:** Columns are horizontal, drag-and-drop supported.
+  - **Design Problems:** HMW optimize for larger screens? HMW support both mouse and keyboard?
+  - **Design Opportunities:** What if columns can be resized?
+
+2.0 Task Creation Desktop Modal (Pu.1)
+  - **Goal:** Create tasks efficiently.
+  - **Description:** Modal is centered, supports keyboard and mouse.
+  - **Design Problems:** HMW support quick input? HMW ensure accessibility?
+  - **Design Opportunities:** What if modal remembers last input?
+
+---
+
+## Accessibility & Scalability Considerations
+
+- ARIA labels for all column headers and task cards
+- Focus states for keyboard navigation
+- Color contrast meeting WCAG standards
+- Responsive breakpoints for mobile (320px-767px), tablet (768px-1023px), desktop (1024px+)
 - Design tokens for spacing, colors, typography
-- UX lead approval
-- Design tokens exportable for Angular
+- Keyboard shortcuts for all major actions
+- Screen reader announcements for status changes
 
 ---
 
-# Experience Mindset
+## Sequence of Screens (Example Workflow)
 
-The Kanban board experience can be broken into multiple scenarios, each with different user needs and business objectives. Below are identified scenarios with at least two workflow design variations for each.
+### Drag-and-Drop Workflow
+1.0 Kanban Board Homepage -> 2.0 Task Creation Modal (Pu.1) -> 3.0 Task Card in 'To Do' Column -> 4.0 Task Card in 'In Progress'/'Done' Columns
 
----
+### Keyboard Navigation Workflow
+1.0 Kanban Board Homepage -> 2.0 Task Creation via Keyboard Shortcut (Pu.1) -> 3.0 Task Movement via Keyboard
 
-## Scenario 1: Viewing the Kanban Board (Read-Only)
+### Mobile Workflow
+1.0 Kanban Board Mobile View -> 2.0 Task Creation Mobile Modal (Pu.1)
 
-### Context
-- User: Project manager or team member
-- Situation: Needs to quickly assess project/task status across columns
-- Action: Open the Kanban board to view tasks
-- Actor: User
-- Goal: Efficiently and accessibly view board status on any device
-
-### User Goal
-To view the status of all tasks in a project, clearly separated into 'To Do', 'In Progress', and 'Done', with clarity and accessibility across devices.
-
-### Business Goal
-To provide a scalable, accessible, and responsive interface that improves project transparency and user satisfaction.
+### Tablet/Desktop Workflow
+1.0 Kanban Board Desktop View -> 2.0 Task Creation Desktop Modal (Pu.1)
 
 ---
 
-### Workflow Variation 1.1: Default Responsive Board
+## Design Problems & Opportunities (Summary)
 
-#### Screens
-
-1.0 Kanban Board - Desktop View
-- **Page Goal:** Present all columns and tasks clearly on a large screen
-- **Screen Description:**
-  - Three columns: 'To Do', 'In Progress', 'Done'
-  - Each column header is visually distinct and labeled for screen readers
-  - Tasks/cards within columns show summary info (title, assignee, due date)
-  - Color-coded headers, clear typography
-  - Visual separators between columns
-  - Keyboard navigation enabled
-- **Design Problems:**
-  - HMW ensure clear separation of columns without overwhelming the user?
-  - HMW maintain accessibility for keyboard and screen reader users?
-- **Design Opportunities:**
-  - What if users could customize column order?
-  - What if board had a summary bar for quick stats?
-
-1.1 Kanban Board - Tablet View
-- **Page Goal:** Maintain clarity and usability as space decreases
-- **Screen Description:**
-  - Columns shrink but remain horizontally arranged
-  - Headers and cards adapt in size
-  - Touch targets enlarged
-- **Design Problems:**
-  - HMW prevent crowding of cards on smaller screens?
-- **Design Opportunities:**
-  - What if columns could be collapsed?
-
-1.2 Kanban Board - Mobile View
-- **Page Goal:** Ensure single-column clarity and ease of navigation
-- **Screen Description:**
-  - Columns stack vertically; only one column visible at a time (tabbed or swipable)
-  - Sticky column headers
-  - ARIA live regions announce column changes
-- **Design Problems:**
-  - HMW maintain context when switching columns?
-- **Design Opportunities:**
-  - What if a mini-map allowed quick navigation between columns?
-
-**Screen Sequence:**
-1.0 (Desktop) → 1.1 (Tablet) → 1.2 (Mobile)
+- HMW help users quickly identify and manage tasks?
+- HMW ensure accessibility for all users?
+- HMW support responsive layouts without losing context?
+- What if the board provides real-time feedback and notifications?
+- What if accessibility features are customizable?
+- What if design tokens enable easy theme and layout updates?
 
 ---
 
-### Workflow Variation 1.2: Accessibility-First Board
+## Business Alignment
 
-#### Screens
-
-2.0 Accessible Kanban Board
-- **Page Goal:** Maximize accessibility for users with disabilities
-- **Screen Description:**
-  - High-contrast color palette
-  - Large, readable typography
-  - ARIA labels on all interactive elements
-  - Focus states highly visible
-  - Keyboard shortcuts for column navigation
-  - Screen reader instructions on load
-- **Design Problems:**
-  - HMW support users with color blindness?
-  - HMW ensure all actions are keyboard-accessible?
-- **Design Opportunities:**
-  - What if board supported custom accessibility profiles?
-
-2.1 Error State - Accessibility Issue Detected (Er.1)
-- **Page Goal:** Inform user of detected accessibility issue
-- **Screen Description:**
-  - Modal or banner alerting user to missing ARIA label or focus trap
-- **Design Problems:**
-  - HMW notify users without disrupting their workflow?
-- **Design Opportunities:**
-  - What if board suggested accessibility fixes in real time?
-
-**Screen Sequence:**
-2.0 → Er.1 (if issue)
-
----
-
-## Scenario 2: Interacting with the Board (Moving Cards)
-
-### Context
-- User: Team member
-- Situation: Needs to update task status by moving cards between columns
-- Action: Drag and drop or keyboard navigation to move cards
-- Actor: User
-- Goal: Update task status quickly and accessibly
-
-### User Goal
-To easily move tasks between columns to reflect progress, using mouse, touch, or keyboard.
-
-### Business Goal
-To streamline workflow updates and ensure all users (including those with disabilities) can interact with the board.
-
----
-
-### Workflow Variation 2.1: Drag-and-Drop Interaction
-
-#### Screens
-
-3.0 Kanban Board - Drag-and-Drop Mode
-- **Page Goal:** Enable intuitive drag-and-drop for task movement
-- **Screen Description:**
-  - Cards are draggable with mouse or touch
-  - Visual feedback on drag (shadow, highlight target column)
-  - Drop zones clearly marked
-  - ARIA live region announces move
-- **Design Problems:**
-  - HMW provide feedback for drag-and-drop actions for screen reader users?
-- **Design Opportunities:**
-  - What if undo was available for accidental moves?
-
-3.1 Pop-Up: Move Confirmation (Pu.1)
-- **Page Goal:** Confirm card move (optional for critical tasks)
-- **Screen Description:**
-  - Modal asks user to confirm move
-  - Accessible via keyboard
-- **Design Problems:**
-  - HMW avoid unnecessary interruptions?
-- **Design Opportunities:**
-  - What if confirmation could be toggled per user?
-
-**Screen Sequence:**
-3.0 → Pu.1 (optional)
-
----
-
-### Workflow Variation 2.2: Keyboard-First Interaction
-
-#### Screens
-
-4.0 Kanban Board - Keyboard Navigation Mode
-- **Page Goal:** Allow card movement via keyboard only
-- **Screen Description:**
-  - Tab and arrow keys navigate between columns/cards
-  - Space/Enter selects card; arrow keys move it
-  - Focus indicators highlight current selection
-  - ARIA announcements for moves
-- **Design Problems:**
-  - HMW make keyboard navigation as efficient as drag-and-drop?
-- **Design Opportunities:**
-  - What if users could set custom keyboard shortcuts?
-
-4.1 Error State: Invalid Move (Er.2)
-- **Page Goal:** Alert user if move is not allowed
-- **Screen Description:**
-  - Inline error message or toast
-  - Explains why move is invalid
-- **Design Problems:**
-  - HMW clarify board rules to users?
-- **Design Opportunities:**
-  - What if help tips appeared contextually?
-
-**Screen Sequence:**
-4.0 → Er.2 (if needed)
-
----
-
-## Scenario 3: Customizing Board Layout
-
-### Context
-- User: Project manager
-- Situation: Wants to adjust column order or add/remove columns
-- Action: Access board settings, customize layout
-- Actor: User
-- Goal: Tailor board to fit project needs quickly
-
-### User Goal
-To easily customize the Kanban board's columns and layout for their team's workflow.
-
-### Business Goal
-To provide a flexible, scalable solution that can adapt to different team processes and grow with user needs.
-
----
-
-### Workflow Variation 3.1: Settings Panel Customization
-
-#### Screens
-
-5.0 Kanban Board - Settings Panel
-- **Page Goal:** Allow column customization
-- **Screen Description:**
-  - Settings icon opens panel
-  - User can reorder, rename, add, or remove columns
-  - Live preview updates board in real-time
-  - Changes are accessible and reversible
-- **Design Problems:**
-  - HMW prevent accidental data loss?
-- **Design Opportunities:**
-  - What if users could save board templates?
-
-5.1 Pop-Up: Save Changes Confirmation (Pu.2)
-- **Page Goal:** Confirm and save layout changes
-- **Screen Description:**
-  - Modal summarizing changes
-  - Undo option
-- **Design Problems:**
-  - HMW make saving feel safe and reversible?
-
-**Screen Sequence:**
-5.0 → Pu.2
-
----
-
-### Workflow Variation 3.2: Quick Edit Mode
-
-#### Screens
-
-6.0 Kanban Board - Quick Edit Overlay
-- **Page Goal:** Enable fast, inline column edits
-- **Screen Description:**
-  - Edit icons on column headers
-  - Inline editing of column names and colors
-  - Add/remove column buttons
-  - All actions keyboard-accessible
-- **Design Problems:**
-  - HMW balance speed and error prevention?
-- **Design Opportunities:**
-  - What if system suggested best practices for column naming?
-
-**Screen Sequence:**
-6.0
-
----
-
-# Summary: Screen Sequences by Scenario
-
-**Scenario 1: Viewing the Board**
-- 1.0 Kanban Board - Desktop View
-- 1.1 Kanban Board - Tablet View
-- 1.2 Kanban Board - Mobile View
-- 2.0 Accessible Kanban Board
-- Er.1 Accessibility Issue Detected
-
-**Scenario 2: Interacting with the Board**
-- 3.0 Kanban Board - Drag-and-Drop Mode
-- Pu.1 Move Confirmation
-- 4.0 Kanban Board - Keyboard Navigation Mode
-- Er.2 Invalid Move
-
-**Scenario 3: Customizing the Board**
-- 5.0 Kanban Board - Settings Panel
-- Pu.2 Save Changes Confirmation
-- 6.0 Kanban Board - Quick Edit Overlay
-
----
-
-# Accessibility & Scalability Considerations
-- All interactions must be ARIA-labeled and keyboard-accessible
-- Focus states must be visually clear
-- Color palette supports high contrast
-- Responsive breakpoints ensure usability on all device sizes
-- Design tokens enable scalable theming and future-proofing
-
----
-
-# End of UX Workflow Documentation
+- Comprehensive design specs for Kanban board
+- Responsive and accessible layouts
+- Design tokens compatible with Angular
+- User-centric workflows for all scenarios
+- Documentation ready for review and implementation
